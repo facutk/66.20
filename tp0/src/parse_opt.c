@@ -8,6 +8,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include "default_values.h"
 
 int parse_width( char * param, double * result ) {
@@ -68,6 +69,24 @@ int parse_center( char * param, double * c_re, double * c_im ) {
         return 0;
     }
     fprintf( stderr, "fatal: invalid center specification.\n" );
+    return 1;
+}
+
+int parse_output( char * param, FILE ** output ) {
+    FILE * _output = 0;
+
+    if ( strcmp(param, "-") == 0 ) {
+        _output = stdout;
+    } else {
+        _output = fopen( param, "wb" );
+    }
+
+    if ( _output ) {
+        *output = _output;
+        return 0;
+    }
+    
+    fprintf( stderr, "fatal: Output file error.\n" );
     return 1;
 }
 

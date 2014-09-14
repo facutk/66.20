@@ -171,7 +171,6 @@ void test_parse_center_gets_empty_halts(CuTest *tc) {
 }
 
 void test_parse_center_gets_1_2i_returns_1_2(CuTest *tc) {
-
     double actual_c_re;
     double actual_c_im;
     char param[] = "1+2i";
@@ -186,7 +185,6 @@ void test_parse_center_gets_1_2i_returns_1_2(CuTest *tc) {
 }
 
 void test_parse_center_gets_1_2i_neg_returns_1_2_neg(CuTest *tc) {
-
     double actual_c_re;
     double actual_c_im;
     char param[] = "-1-2i";
@@ -199,6 +197,40 @@ void test_parse_center_gets_1_2i_neg_returns_1_2_neg(CuTest *tc) {
     CuAssertDblEquals(tc, expected_c_re, actual_c_re, delta);
     CuAssertDblEquals(tc, expected_c_im, actual_c_im, delta);
 }
+
+/* 
+ * parse_output() tests
+ * */
+void test_parse_output_gets_empty_halts(CuTest *tc) {
+    FILE * output;
+    char param[] = "";
+
+    int expected = 1;
+    int actual = parse_output( param, &output );
+
+    CuAssertIntEquals(tc, expected, actual);
+}
+
+void test_parse_output_gets_dash_returns_stdout(CuTest *tc) {
+    FILE * actual_output;
+    char param[] = "-";
+
+    FILE * expected_output = stdout;
+    int result = parse_output( param, &actual_output );
+
+    CuAssertPtrEquals(tc, expected_output, actual_output);
+}
+
+void test_parse_output_gets_impossible_halts(CuTest *tc) {
+    FILE * output;
+    char param[] = "/x";
+
+    int expected = 1;
+    int actual = parse_output( param, &output );
+
+    CuAssertIntEquals(tc, expected, actual);
+}
+
 CuSuite* parse_opt_tests_get_suite() {
     CuSuite* suite = CuSuiteNew();
 
@@ -225,5 +257,10 @@ CuSuite* parse_opt_tests_get_suite() {
     SUITE_ADD_TEST(suite, test_parse_center_gets_empty_halts );
     SUITE_ADD_TEST(suite, test_parse_center_gets_1_2i_returns_1_2 );
     SUITE_ADD_TEST(suite, test_parse_center_gets_1_2i_neg_returns_1_2_neg );
+
+    // parse_output()
+    SUITE_ADD_TEST(suite, test_parse_output_gets_empty_halts);
+    SUITE_ADD_TEST(suite, test_parse_output_gets_dash_returns_stdout);
+    SUITE_ADD_TEST(suite, test_parse_output_gets_impossible_halts);
     return suite;
 }
