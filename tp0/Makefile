@@ -1,34 +1,17 @@
 CC = gcc
-CXX = g++
 CFLAGS ?= -Wall
 OFLAGS ?= -O3
 LDFLAGS ?= -static
-
 DIRINC = include
-DIRTEST = test
-DIRSRC = src
 
-_DEPSINC = CuTest.c
-DEPSINC = $(patsubst %,$(DIRINC)/%,$(_DEPSINC))
+all: tp0
 
-_DEPSMAIN = main.c
-DEPSMAIN = $(patsubst %,$(DIRSRC)/%,$(_DEPSMAIN))
-
-_DEPSTEST = runTests.c ParseOptTest.c 
-DEPSTEST = $(patsubst %,$(DIRTEST)/%,$(_DEPSTEST))
-
-_DEPSSRC = ParseOpt.c
-DEPSSRC = $(patsubst %,$(DIRSRC)/%,$(_DEPSSRC))
-
-all: unitests tp0
-
-unitests: $(DEPSTEST) $(DEPSINC) $(DEPSSRC)
-	$(CC) -I$(DIRINC) $(DEPSTEST) $(DEPSINC) $(DEPSSRC) -o $@
+tests: test/runTests.c test/ParseOptTest.c include/CuTest.c src/ParseOpt.c
+	$(CC) -I$(DIRINC) test/runTests.c test/ParseOptTest.c include/CuTest.c src/ParseOpt.c -o $@
 	./$@
-	rm $@
 
-tp0: $(DEPSMAIN) $(DEPSSRC)
-	$(CC) $(DEPSSRC) $(DEPSMAIN) $(OFLAGS) -o $@
+tp0: src/main.c src/ParseOpt.c
+	$(CC) src/main.c src/ParseOpt.c $(OFLAGS) -o $@
 
 clean:
-	rm tp0
+	rm tp0 tests
