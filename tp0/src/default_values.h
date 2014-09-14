@@ -1,17 +1,10 @@
 /*
 ===========================================================================
- Name        : main.c
+ Name        : default_values.h
  Author      : Tkaczyszyn, Facundo
  Version     : 1.0
- Description : 66.20 TP0 - Mandelbrot, Version 1.0
+ Description : Default Values
 ===========================================================================
  */
 
-#include <stdio.h>
-
-int main(int argc, char** argv) {
-
-    return 0;
-
-}
-
+const double default_width = 4;

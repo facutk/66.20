@@ -1,14 +1,13 @@
 #include "CuTest.h"
 #include <stdio.h>
     
-CuSuite* StrUtilGetSuite();
+CuSuite* parse_opt_tests_get_suite();
 
-void RunAllTests(void) {
+void run_all_tests(void) {
     CuString *output = CuStringNew();
     CuSuite* suite = CuSuiteNew();
     
-    CuSuiteAddSuite(suite, StrUtilGetSuite());
-
+    CuSuiteAddSuite(suite, parse_opt_tests_get_suite() );
     CuSuiteRun(suite);
     CuSuiteSummary(suite, output);
     CuSuiteDetails(suite, output);
@@ -16,6 +15,6 @@ void RunAllTests(void) {
 }
 
 int main(void) {
-    RunAllTests();
+    run_all_tests();
     return 0;
 }

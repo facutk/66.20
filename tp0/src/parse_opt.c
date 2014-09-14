@@ -8,7 +8,9 @@
  */
 
 #include <stdio.h>
+#include "default_values.h"
 
-int genOne() {
+int parseWidth( char * param, double * result ) {
+    *result = default_width;
     return 0;
 }
