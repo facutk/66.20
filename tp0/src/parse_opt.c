@@ -13,6 +13,12 @@
 int parse_width( char * param, double * result ) {
     double width;
     int scanned = sscanf( param, "%lf", &width );
-    *result = width;
-    return 0;
+    if ( scanned == 1 ) {
+        if ( width > 0 ) {
+            *result = width;
+            return 0;
+        }
+    }
+    fprintf( stderr, "fatal: invalid width specification.\n" );
+    return 1;
 }
