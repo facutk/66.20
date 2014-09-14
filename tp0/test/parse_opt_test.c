@@ -7,7 +7,7 @@ void test_parse_width_gets_1_returns_1(CuTest *tc) {
     double delta = 0.00001;
     char param[] = "1";
 
-    int result = parseWidth( param, &actual );
+    int result = parse_width( param, &actual );
 
     CuAssertDblEquals(tc, expected, actual, delta);
 }

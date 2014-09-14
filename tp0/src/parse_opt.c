@@ -10,7 +10,9 @@
 #include <stdio.h>
 #include "default_values.h"
 
-int parseWidth( char * param, double * result ) {
-    *result = default_width;
+int parse_width( char * param, double * result ) {
+    double width;
+    int scanned = sscanf( param, "%lf", &width );
+    *result = width;
     return 0;
 }
