@@ -51,3 +51,23 @@ int parse_resolution( char * param, double * res_x, double * res_y ) {
     fprintf( stderr, "fatal: invalid resolution specification.\n" );
     return 1;
 }
+
+int parse_center( char * param, double * c_re, double * c_im ) {
+    double _c_re;
+    double _c_im;
+    char _c_im_sign;
+
+    int scanned = sscanf( param, "%lf%c%lfi" , &_c_re, &_c_im_sign, &_c_im );
+    if ( scanned == 3 ) {
+
+        if (_c_im_sign == '-') 
+            _c_im = _c_im * -1;
+        *c_re = _c_re;
+        *c_im = _c_im;
+
+        return 0;
+    }
+    fprintf( stderr, "fatal: invalid center specification.\n" );
+    return 1;
+}
+

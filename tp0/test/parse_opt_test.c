@@ -156,6 +156,49 @@ void test_parse_resolution_gets_negative_halts(CuTest *tc) {
     CuAssertIntEquals(tc, expected, actual);
 }
 
+/* 
+ * parse_center() tests
+ * */
+void test_parse_center_gets_empty_halts(CuTest *tc) {
+    double c_re;
+    double c_im;
+    char param[] = "";
+
+    int expected = 1;
+    int actual = parse_center( param, &c_re, &c_im );
+
+    CuAssertIntEquals(tc, expected, actual);
+}
+
+void test_parse_center_gets_1_2i_returns_1_2(CuTest *tc) {
+
+    double actual_c_re;
+    double actual_c_im;
+    char param[] = "1+2i";
+    double delta = 0.00001;
+
+    double expected_c_re = 1;
+    double expected_c_im = 2;
+    int result = parse_center( param, &actual_c_re, &actual_c_im );
+
+    CuAssertDblEquals(tc, expected_c_re, actual_c_re, delta);
+    CuAssertDblEquals(tc, expected_c_im, actual_c_im, delta);
+}
+
+void test_parse_center_gets_1_2i_neg_returns_1_2_neg(CuTest *tc) {
+
+    double actual_c_re;
+    double actual_c_im;
+    char param[] = "-1-2i";
+    double delta = 0.00001;
+
+    double expected_c_re = -1;
+    double expected_c_im = -2;
+    int result = parse_center( param, &actual_c_re, &actual_c_im );
+
+    CuAssertDblEquals(tc, expected_c_re, actual_c_re, delta);
+    CuAssertDblEquals(tc, expected_c_im, actual_c_im, delta);
+}
 CuSuite* parse_opt_tests_get_suite() {
     CuSuite* suite = CuSuiteNew();
 
@@ -177,5 +220,10 @@ CuSuite* parse_opt_tests_get_suite() {
     SUITE_ADD_TEST(suite, test_parse_resolution_gets_empty_halts );
     SUITE_ADD_TEST(suite, test_parse_resolution_gets_16x12_returns_16x12 );
     SUITE_ADD_TEST(suite, test_parse_resolution_gets_negative_halts );
+
+    // parse_center()
+    SUITE_ADD_TEST(suite, test_parse_center_gets_empty_halts );
+    SUITE_ADD_TEST(suite, test_parse_center_gets_1_2i_returns_1_2 );
+    SUITE_ADD_TEST(suite, test_parse_center_gets_1_2i_neg_returns_1_2_neg );
     return suite;
 }
