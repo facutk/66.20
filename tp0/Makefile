@@ -10,8 +10,8 @@ tests: test/run_tests.c test/parse_opt_test.c include/CuTest.c src/parse_opt.c s
 	$(CC) -I$(DIRINC) test/run_tests.c test/parse_opt_test.c src/default_values.h include/CuTest.c src/parse_opt.c -o $@
 	./$@
 
-tp0: src/main.c src/parse_opt.c src/default_values.h
-	$(CC) src/main.c src/default_values.h src/parse_opt.c $(OFLAGS) -o $@
+tp0: src/main.c src/parse_opt.c src/mandelbrot.c src/default_values.h
+	$(CC) src/main.c src/mandelbrot.c src/default_values.h src/parse_opt.c $(OFLAGS) -o $@
 
 clean:
 	rm tp0 tests
