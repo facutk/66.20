@@ -122,8 +122,8 @@ void test_parse_height_gets_negative_halts(CuTest *tc) {
  * */
 void test_parse_resolution_gets_empty_halts(CuTest *tc) {
     int expected = 1;
-    double res_x;
-    double res_y;
+    int res_x;
+    int res_y;
     char param[] = "";
 
     int actual = parse_resolution( param, &res_x, &res_y );
@@ -132,22 +132,21 @@ void test_parse_resolution_gets_empty_halts(CuTest *tc) {
 }
 
 void test_parse_resolution_gets_16x12_returns_16x12(CuTest *tc) {
-    double expected_x = 16;
-    double expected_y = 12;
-    double delta = 0.00001;
-    double actual_x;
-    double actual_y;
+    int expected_x = 16;
+    int expected_y = 12;
+    int actual_x;
+    int actual_y;
     char param[] = "16x12";
 
     int actual = parse_resolution( param, &actual_x, &actual_y );
 
-    CuAssertDblEquals(tc, expected_x, actual_x, delta);
-    CuAssertDblEquals(tc, expected_y, actual_y, delta);
+    CuAssertIntEquals(tc, expected_x, actual_x);
+    CuAssertIntEquals(tc, expected_y, actual_y);
 }
 
 void test_parse_resolution_gets_negative_halts(CuTest *tc) {
-    double res_x;
-    double res_y;
+    int res_x;
+    int res_y;
     char param[] = "-16x12";
 
     int expected = 1;
@@ -262,5 +261,6 @@ CuSuite* parse_opt_tests_get_suite() {
     SUITE_ADD_TEST(suite, test_parse_output_gets_empty_halts);
     SUITE_ADD_TEST(suite, test_parse_output_gets_dash_returns_stdout);
     SUITE_ADD_TEST(suite, test_parse_output_gets_impossible_halts);
+
     return suite;
 }
