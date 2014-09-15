@@ -137,6 +137,7 @@ int parse_opts( int argc,
                 double * height,
                 FILE ** output ) {
     
+    int output_defined = 0;
     int result;
 
     // getopt does not print over stderr
@@ -191,8 +192,11 @@ int parse_opts( int argc,
 
             case 'o': {
                 if( parse_output( optarg,
-                                  output ) > 0 )
+                                  output ) == 0 ) {
+                    output_defined = 1;
+                } else {
                     return 1;
+                }
                 break;
             }
 
@@ -215,6 +219,9 @@ int parse_opts( int argc,
             }
         }
     }
+
+    if ( !output_defined ) return 1;
+
     return 0;
 }
 
