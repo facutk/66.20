@@ -30,6 +30,15 @@ int main(int argc, char** argv) {
                                     &height,
                                     &output );
 
+    if ( parse_result == 0 ) {
+        mandelbrot( res_x,
+                    res_y,
+                    c_re,
+                    c_im,
+                    width,
+                    height,
+                    output );
+    }
     return 0;
 
 }
