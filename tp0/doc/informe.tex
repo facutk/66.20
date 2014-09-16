@@ -1,6 +1,8 @@
 \documentclass[a4paper,10pt]{article}
 
 \usepackage{graphicx}
+\usepackage{listings}
+
 \usepackage[ansinew]{inputenc}
 \usepackage[spanish]{babel}
 
@@ -42,6 +44,35 @@ Texto de la sección...
 
 Texto de la subsección...
 
+\begin{lstlisting}[
+    language=bash,
+    basicstyle=\small\ttfamily
+]
+  $ ./tp0 --center 0+0i --width 2 --height 2 --resolution 12x9
+
+    P2
+    12
+    9
+    255
+      0   0   0   0   0   0   0   0   0   0   0   0 
+      0   0   0   1   1   1   1   1   1   1   0   0 
+      0   0   1   2   2   3   3   1   1   1   1   0 
+      0   2   2   3   5  11  14   7   2   1   1   1 
+      0   3   6 255 255 255 255 255   2   1   1   1 
+      0 255 255 255 255 255 255   8   3   2   1   1 
+      0   2   2   3   5  11  14   7   2   1   1   1 
+      0   0   1   2   2   3   3   1   1   1   1   0 
+      0   0   0   1   1   1   1   1   1   1   0   0 
+\end{lstlisting}
+
+\begin{figure}[!htp]
+\begin{center}
+\includegraphics[width=0.7\textwidth]{images/mandelbrot_0.eps}
+\caption{ Mandelbrot0 }
+\label{mandelbrot_0}
+\end{center}
+\end{figure}
+
 
 \section{Este es el Título de Otra Sección}
 
@@ -52,14 +83,6 @@ Texto de la otra sección. En la figura~\ref{fig001} se muestra un ejemplo de cóm
 \includegraphics[width=0.5\textwidth]{fig001.eps}
 \caption{Facultad de Ingeniería $-$ Universidad de Buenos Aires.}
 \label{fig001}
-\end{center}
-\end{figure}
-
-\begin{figure}[!htp]
-\begin{center}
-\includegraphics[width=1\textwidth]{images/mandelbrot_0.eps}
-\caption{ Mandelbrot0 }
-\label{mandelbrot_0}
 \end{center}
 \end{figure}
 
