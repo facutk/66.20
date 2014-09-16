@@ -1,2 +1,5 @@
 tp0/tp0
 tp0/tests
+*.dvi
+*.aux
+*.log
