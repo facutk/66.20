@@ -2,6 +2,7 @@
 
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage{hyperref}
 
 \usepackage[ansinew]{inputenc}
 \usepackage[spanish]{babel}
@@ -31,18 +32,23 @@
 
 
 \begin{abstract}
-Este template es un modelo que proporciona a los alumnos las instrucciones necesarias para preparar sus informes para la asignatura \textit{66.20 Organización de Computadoras} (práctica Viernes). El informe podrá contener (optativo) un resumen de no más de 150 palabras. La primera página del artículo deberá seguir el formato que se ilustra en el presente modelo y deberá contener el título, los nombres de los autores, sus números de padrón, sus direcciones de e-mail, y el resumen (si tuviese). La primera página del informe no debe ser numerada.
+Este template es un modelo \cite{INT06} que proporciona a los alumnos las instrucciones necesarias para preparar sus informes para la asignatura \textit{66.20 Organización de Computadoras} (práctica Viernes). El informe podrá contener (optativo) un resumen de no más de 150 palabras. La primera página del artículo deberá seguir el formato que se ilustra en el presente modelo y deberá contener el título, los nombres de los autores, sus números de padrón, sus direcciones de e-mail, y el resumen (si tuviese). La primera página del informe no debe ser numerada.
 \end{abstract}
 
+
+\pagebreak
 
 \section{Introducción}
 
 Este artículo es un modelo que proporciona a los alumnos las instrucciones necesarias para preparar sus informes para la asignatura \textit{66.20 Organización de Computadoras} (práctica Viernes). Además de la estructura presentada, el informe podría contener otras secciones y subsecciones, a continuación de la introducción. Podrá  incluir (se recomienda) gráficos ilustrativos y/o tablas. El informe finaliza con una sección de conclusiones, y las citas bibliográficas consultadas siguiendo, rigurosamente, el formato presentado al final de este modelo. También se recomienda respectar el estilo tipográfico mostrado aquí (fuente Times Roman de 10 puntos, u otras similares)
 
+\pagebreak
 
 \section{Corridas de prueba}
 
-Texto de la sección...
+Documentamos tres corridas de prueba. Definimos centro y tamaño de ventana y
+generamos una salida por consola con baja resolucion, y luego una con mayor
+resolucion y convertimos en grafico.
 
 
 \subsection{Este es el Título de una Subsección}
@@ -454,7 +460,7 @@ Texto de la sección...
 \end{lstlisting}
 \pagebreak
 
-\subsection{ mandelbrot.c }
+\subsection{mandelbrot.c}
 
 \begin{lstlisting}[
     language=c,
@@ -514,28 +520,28 @@ int mandelbrot( int res_x,
 
 
 
+\section{Pruebas}
 
-\section{Este es el Título de Otra Sección}
+El desarrollo y validacion del desarrollo se baso en un set de pruebas unitarias.
+Como framework de unittesting elegimos CuTest, debido a su portabilidad y su facilidad para compilar en MIPS.
 
-Texto de la otra sección. En la figura~\ref{fig001} se muestra un ejemplo de cómo presentar las ilustraciones del informe.
+\section{Extras}
 
-\begin{figure}[!htp]
-\begin{center}
-\includegraphics[width=0.5\textwidth]{fig001.eps}
-\caption{Facultad de Ingeniería $-$ Universidad de Buenos Aires.}
-\label{fig001}
-\end{center}
-\end{figure}
+Desarrollamos un wrapper en Python
 
-\subsection{Este es el Título de Otra Subsección}
+\href{http://home.facu.tk/mandelbrot}{http://home.facu.tk/mandelbrot}
 
-Texto de la otra subsección...
+\section{Repositorio}
 
+El codigo fuente del tp, el wrapper y este documento esta alojado en github.
+
+\href{https://github.com/facutk/66.20}{https://github.com/facutk/66.20}
 
 \section{Conclusiones}
 
 Se presentó un modelo para que los alumnos puedan tomar como referencia en la redacción de sus informes de trabajos prácticos.
 
+\tableofcontents
 
 \begin{thebibliography}{99}
 
