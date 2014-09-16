@@ -27,6 +27,7 @@ int mandelbrot( int res_x,
     double c_y;
     double c_x_min = c_re - ( width / 2 );
     double c_y_min = c_im - ( height/ 2 );
+    printf("%f\n", c_y_min);
 
     double px_width  = ( width  )/res_x;
     double px_height = ( height )/res_y;
@@ -42,7 +43,7 @@ int mandelbrot( int res_x,
     fprintf( output,"P2\n%d\n%d\n%d\n", res_x, res_y, max_it );
 
     // iterate over the coordinates and write the data
-    for( it_y = 0; it_y < res_y ; it_y++ ) {
+    for( it_y = res_y; it_y > 0 ; it_y-- ) {
         c_y = c_y_min + it_y * px_height;
         if( fabs( c_y ) < px_height / 2 ) c_y = 0.0;
         for( it_x = 0 ; it_x < res_x ; it_x++ ) {         
