@@ -27,7 +27,6 @@ int mandelbrot( int res_x,
     double c_y;
     double c_x_min = c_re - ( width / 2 );
     double c_y_min = c_im - ( height/ 2 );
-    printf("%f\n", c_y_min);
 
     double px_width  = ( width  )/res_x;
     double px_height = ( height )/res_y;
