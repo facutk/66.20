@@ -18,6 +18,9 @@ int mandelbrot( int res_x,
                 double height,
                 FILE * output ) {
 
+    // hack to solve issue when Resolution == 1 
+    if ( res_x == 1) width = 0; if ( res_y == 1) height = 0;
+
     const int    max_it = 255;
     const double escape_radius = 2;
 

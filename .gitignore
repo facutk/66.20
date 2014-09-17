@@ -3,3 +3,5 @@ tp0/tests
 *.dvi
 *.aux
 *.log
+*.toc
+*.out
