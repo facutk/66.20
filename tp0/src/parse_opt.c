@@ -11,10 +11,14 @@
 #include <string.h>
 #include <getopt.h>
 
-// Cadena que lista las opciones cortas válidas
+const char msg_invalid_width[]      = "invalid width specification.";
+const char msg_invalid_height[]     = "invalid height specification.";
+const char msg_invalid_resolution[] = "invalid resolution specification.";
+const char msg_invalid_center[]     = "invalid center specification.";
+const char msg_output_error[]       = "Output file error.";
+
 const char* const op_cortas = "r:c:w:H:o:hV";
 
-// Estructura de structs describiendo los valores largos
 const struct option op_largas[] = {
     { "resolution", required_argument, NULL, 'r' },
     { "center",     required_argument, NULL, 'c' },
@@ -26,6 +30,17 @@ const struct option op_largas[] = {
     { NULL,         no_argument,       NULL, 0 }
 };
 
+int print_stderr = 1;
+
+void disable_error_output() {
+    print_stderr = 0;
+}
+
+void print_error(const char * message ) {
+    if ( print_stderr )
+        fprintf( stderr, "fatal: %s\n", message );
+}
+
 int parse_width( char * param, double * result ) {
     double width;
     int scanned = sscanf( param, "%lf", &width );
@@ -35,7 +50,7 @@ int parse_width( char * param, double * result ) {
             return 0;
         }
     }
-    fprintf( stderr, "fatal: invalid width specification.\n" );
+    print_error( msg_invalid_width );
     return 1;
 }
 
@@ -48,7 +63,7 @@ int parse_height( char * param, double * result ) {
             return 0;
         }
     }
-    fprintf( stderr, "fatal: invalid height specification.\n" );
+    print_error( msg_invalid_height );
     return 1;
 }
 
@@ -64,7 +79,7 @@ int parse_resolution( char * param, int * res_x, int * res_y ) {
             return 0;
         }
     }
-    fprintf( stderr, "fatal: invalid resolution specification.\n" );
+    print_error( msg_invalid_resolution );
     return 1;
 }
 
@@ -83,7 +98,7 @@ int parse_center( char * param, double * c_re, double * c_im ) {
 
         return 0;
     }
-    fprintf( stderr, "fatal: invalid center specification.\n" );
+    print_error( msg_invalid_center );
     return 1;
 }
 
@@ -101,7 +116,7 @@ int parse_output( char * param, FILE ** output ) {
         return 0;
     }
     
-    fprintf( stderr, "fatal: Output file error.\n" );
+    print_error( msg_output_error );
     return 1;
 }
 

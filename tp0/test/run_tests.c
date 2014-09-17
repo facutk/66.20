@@ -15,6 +15,7 @@ void run_all_tests(void) {
 }
 
 int main(void) {
+    disable_error_output();
     run_all_tests();
     return 0;
 }
