@@ -38,8 +38,9 @@ int main(int argc, char** argv) {
                     width,
                     height,
                     output );
+        return 0;
     }
-    return 0;
+    return 1;
 
 }
 
