@@ -11,7 +11,6 @@
 #include "default_values.h"
 
 int main(int argc, char** argv) {
-
     int    res_x  = default_res_x;
     int    res_y  = default_res_y;
     double width  = default_width;

@@ -42,7 +42,7 @@ int mandelbrot( int res_x,
     double er_sq = escape_radius*escape_radius;
 
     // PGM header
-    fprintf( output,"P2\n%d\n%d\n%d\n", res_x, res_y, max_it );
+    myfprintf( output,"P2\n%d\n%d\n%d\n", res_x, res_y, max_it );
 
     // iterate over the coordinates and write the data
     for( it_y = res_y; it_y > 0 ; it_y-- ) {
@@ -60,9 +60,9 @@ int mandelbrot( int res_x,
                 z_x_sq = z_x * z_x;
                 z_y_sq = z_y * z_y;
             };
-            fprintf( output, "%3d ", it);
+            myfprintf( output, "%3d ", it);
         }
-        fprintf( output, "\n");
+        myfprintf( output, "\n");
     }
     return 0;
 }
