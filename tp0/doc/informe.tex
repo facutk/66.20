@@ -36,6 +36,9 @@ Este primer template es un modelo \cite{INT06} que proporciona a los alumnos las
 
 \pagebreak
 
+\tableofcontents
+\pagebreak
+
 \section{Introducción}
 
 Este artículo es un modelo que proporciona a los alumnos las instrucciones necesarias para preparar sus informes para la asignatura \textit{66.20 Organización de Computadoras} (práctica Viernes). Además de la estructura presentada, el informe podría contener otras secciones y subsecciones, a continuación de la introducción. Podrá  incluir (se recomienda) gráficos ilustrativos y/o tablas. El informe finaliza con una sección de conclusiones, y las citas bibliográficas consultadas siguiendo, rigurosamente, el formato presentado al final de este modelo. También se recomienda respectar el estilo tipográfico mostrado aquí (fuente Times Roman de 10 puntos, u otras similares)
@@ -176,49 +179,14 @@ Texto de la subsección...
 
 \section{Codigo Fuente}
 
-Texto de la sección...
+Texto de la seccion...
 
 \subsection{main.c}
 \begin{lstlisting}[
     language=c,
     basicstyle=\small\ttfamily
 ]
-    #include <stdio.h>
-    #include "default_values.h"
 
-    int main(int argc, char** argv) {
-
-        int    res_x  = default_res_x;
-        int    res_y  = default_res_y;
-        double width  = default_width;
-        double height = default_height;
-        double c_re   = default_c_re;
-        double c_im   = default_c_im;
-        FILE * output;
-
-        int parse_result =  parse_opts( argc,
-                                        argv,
-                                        &res_x,
-                                        &res_y,
-                                        &c_re,
-                                        &c_im,
-                                        &width,
-                                        &height,
-                                        &output );
-
-        if ( parse_result == 0 ) {
-            mandelbrot( res_x,
-                        res_y,
-                        c_re,
-                        c_im,
-                        width,
-                        height,
-                        output );
-            return 0;
-        }
-        return 1;
-
-    }
 
 \end{lstlisting}
 
@@ -227,12 +195,7 @@ Texto de la sección...
     language=c,
     basicstyle=\small\ttfamily
 ]
-    const int    default_res_x  = 640;
-    const int    default_res_y  = 480;
-    const double default_width  = 4;
-    const double default_height = 4;
-    const double default_c_re   = 0;
-    const double default_c_im   = 0;
+
 \end{lstlisting}
 \pagebreak
 
@@ -242,219 +205,7 @@ Texto de la sección...
     language=c,
     basicstyle=\small\ttfamily
 ]
-    #include <stdio.h>
-    #include <string.h>
-    #include <getopt.h>
 
-    const char* const op_cortas = "r:c:w:H:o:hV";
-
-    const struct option op_largas[] = {
-        { "resolution", required_argument, NULL, 'r' },
-        { "center",     required_argument, NULL, 'c' },
-        { "width",      required_argument, NULL, 'w' },
-        { "height",     required_argument, NULL, 'H' },
-        { "output",     required_argument, NULL, 'o' },
-        { "help",       no_argument,       NULL, 'h' },
-        { "version",    no_argument,       NULL, 'V' },
-        { NULL,         no_argument,       NULL, 0 }
-    };
-
-    int parse_width( char * param, double * result ) {
-        double width;
-        int scanned = sscanf( param, "%lf", &width );
-        if ( scanned == 1 ) {
-            if ( width > 0 ) {
-                *result = width;
-                return 0;
-            }
-        }
-        fprintf( stderr, "fatal: invalid width specification.\n" );
-        return 1;
-    }
-
-    int parse_height( char * param, double * result ) {
-        double height;
-        int scanned = sscanf( param, "%lf", &height );
-        if ( scanned == 1 ) {
-            if ( height > 0 ) {
-                *result = height;
-                return 0;
-            }
-        }
-        fprintf( stderr, "fatal: invalid height specification.\n" );
-        return 1;
-    }
-
-    int parse_resolution( char * param, int * res_x, int * res_y ) {
-        int _res_x;
-        int _res_y;
-        int scanned = sscanf( param, "%dx%d", &_res_x, &_res_y );
-        if ( scanned == 2 ) {
-            if ( ( _res_x > 0) && (_res_y > 0) ) {
-                *res_x = _res_x; 
-                *res_y = _res_y; 
-                return 0;
-            }
-        }
-        fprintf( stderr, "fatal: invalid resolution specification.\n" );
-        return 1;
-    }
-
-    int parse_center( char * param, double * c_re, double * c_im ) {
-        double _c_re;
-        double _c_im;
-        char _c_im_sign;
-        int scanned = sscanf( param,
-                              "%lf%c%lfi" ,
-                              &_c_re,
-                              &_c_im_sign,
-                              &_c_im );
-        if ( scanned == 3 ) {
-            if (_c_im_sign == '-') 
-                _c_im = _c_im * -1;
-            *c_re = _c_re;
-            *c_im = _c_im;
-            return 0;
-        }
-        fprintf( stderr, "fatal: invalid center specification.\n" );
-        return 1;
-    }
-
-    int parse_output( char * param, FILE ** output ) {
-        FILE * _output = 0;
-
-        if ( strcmp(param, "-") == 0 ) {
-            _output = stdout;
-        } else {
-            _output = fopen( param, "wb" );
-        }
-
-        if ( _output ) {
-            *output = _output;
-            return 0;
-        }
-        
-        fprintf( stderr, "fatal: Output file error.\n" );
-        return 1;
-    }
-
-    void print_help( char * binary_name ) {
-            printf(
-    "Usage:\n"
-    "  %s [options]\n"
-    "\n"
-    "Options:\n"
-    " -r, --resolution (WxH)      Image resolution (default: 640x480).\n"
-    " -c, --center (a+bi)         Complex plane center (default: 0+0i).\n"
-    " -w, --width (w)             Complex plane width (default: 4).\n"
-    " -H, --height (h)            Complex plane height (default: 4).\n"
-    " -o, --output [destination]  Path to output file (PGM format).\n"
-    "                             If [destionation] is -, outputs to stdout\n"
-    " -h, --help                  Print this message and quit.\n"
-    " -V, --version               Print version and quit.\n"
-    "\n",
-            binary_name );
-    }
-
-    void print_version() {
-      printf("66.20 TP0 - Mandelbrot, Version 1.0\n");
-    }
-
-    int parse_opts( int argc,
-                    char * const * argv,
-                    int * res_x,
-                    int * res_y,
-                    double * c_re,
-                    double * c_im,
-                    double * width,
-                    double * height,
-                    FILE ** output ) {
-        
-        int output_defined = 0;
-        int result;
-
-        // getopt does not print over stderr
-        opterr = 0;
-        
-        // every argument processed
-        int next_opt = 0;
-
-        while (1) {
-            next_opt = getopt_long( argc,
-                                    argv,
-                                    op_cortas,
-                                    op_largas,
-                                    NULL);
-
-            if (next_opt == -1) {
-                break;
-            }
-
-            switch (next_opt) {
-
-                case 'r': {
-                    if ( parse_resolution( optarg,
-                                           res_x,
-                                           res_y ) > 0 )
-                        return 1;
-                    break;
-                }
-
-                case 'c': {
-                    if ( parse_center( optarg,
-                                       c_re,
-                                       c_im ) > 0 )
-                        return 1;
-                    break;
-                }
-
-                case 'w': {
-                    if( parse_width( optarg,
-                                     width ) > 0 )
-                        return 1;
-                    break;
-                }
-
-                case 'H': {
-                    if( parse_height( optarg,
-                                      height ) > 0 )
-                        return 1;
-                    break;
-                }
-
-                case 'o': {
-                    if( parse_output( optarg,
-                                      output ) == 0 ) {
-                        output_defined = 1;
-                    } else {
-                        return 1;
-                    }
-                    break;
-                }
-
-                case 'h': {
-                    print_help( argv[0] );
-                    return 1;
-                    break;
-                }
-
-                case 'V': {
-                    print_version();
-                    return 1;
-                    break;
-                }
-
-                default: {
-                    print_help( argv[0] );
-                    return 1;
-                    break;
-                }
-            }
-        }
-        if ( !output_defined )
-            return 1;
-        return 0;
-    }
 
 \end{lstlisting}
 \pagebreak
@@ -465,58 +216,7 @@ Texto de la sección...
     language=c,
     basicstyle=\small\ttfamily
 ]
-#include <stdio.h>
-#include <math.h>
 
-int mandelbrot( int res_x,
-                int res_y,
-                double c_re,
-                double c_im,
-                double width,
-                double height,
-                FILE * output ) {
-
-    // hack to solve issue when Resolution == 1 
-    if ( res_x == 1) width = 0; if ( res_y == 1) height = 0;
-
-    const int    max_it = 255;
-    const double escape_radius = 2;
-    int it, it_x, it_y;
-    double c_x, c_y;
-    double c_x_min = c_re - ( width / 2 );
-    double c_y_min = c_im - ( height/ 2 );
-    double px_width  = ( width  )/res_x;
-    double px_height = ( height )/res_y;
-    double z_x, z_y, z_x_sq, z_y_sq;
-    double er_sq = escape_radius*escape_radius;
-
-    // PGM header
-    fprintf( output,"P2\n%d\n%d\n%d\n", res_x, res_y, max_it );
-
-    // iterate over the coordinates and write the data
-    for( it_y = res_y; it_y > 0 ; it_y-- ) {
-        c_y = c_y_min + it_y * px_height;
-        if( fabs( c_y ) < px_height / 2 ) c_y = 0.0;
-        for( it_x = 0 ; it_x < res_x ; it_x++ ) {         
-            c_x    = c_x_min + it_x * px_width;
-            z_x    = c_x;
-            z_y    = c_y;
-            z_x_sq = z_x * z_x;
-            z_y_sq = z_y * z_y;
-            for ( it = 0;
-                  it < max_it && ((z_x_sq + z_y_sq )< er_sq );
-                  it++) {
-                z_y    = 2 * z_x * z_y + c_y;
-                z_x    = z_x_sq - z_y_sq + c_x;
-                z_x_sq = z_x * z_x;
-                z_y_sq = z_y * z_y;
-            }
-            fprintf( output, "%3d ", it);
-        }
-        fprintf( output, "\n");
-    }
-    return 0;
-}
 \end{lstlisting}
 \pagebreak
 
@@ -543,16 +243,44 @@ El codigo fuente del tp, el wrapper y este documento esta alojado en github.
 
 Se presentó un modelo para que los alumnos puedan tomar como referencia en la redacción de sus informes de trabajos prácticos.
 
-\tableofcontents
 
 \begin{thebibliography}{99}
 
-\bibitem{INT06} Intel Technology \& Research, ``Hyper-Threading Technology,'' 2006, http://www.intel.com/technology/hyperthread/.
+\bibitem{MANDEL01} Introduction to the Mandelbrot Set, http://www.ddewey.net/mandelbrot/
 
-\bibitem{HEN00} J. L. Hennessy and D. A. Patterson, ``Computer Architecture. A Quantitative
-Approach,'' 3ra Edición, Morgan Kaufmann Publishers, 2000.
+\bibitem{MANDEL02} Mandelbrot set, http://en.wikipedia.org/wiki/Mandelbrot_set
 
-\bibitem{LAR92} J. Larus and T. Ball, ``Rewriting Executable Files to Mesure Program Behavior,'' Tech. Report 1083, Univ. of Wisconsin, 1992.
+\bibitem{MANDELCODE} Mandelbrot C Renderer, http://rosettacode.org/wiki/Mandelbrot_set#PPM_non_interactive
+
+\bibitem{PGM} PGM format, http://en.wikipedia.org/wiki/Netpbm_format#PGM_example
+
+\bibitem{GETOPT} getopt_long(3), http://linux.die.net/man/3/getopt_long
+
+\bibitem{SSCANF} sscanf(3), http://linux.die.net/man/3/sscanf
+
+\bibitem{FWRITE} fwrite(3), http://man7.org/linux/man-pages/man3/fwrite.3.html
+
+\bibitem{STDOUT} Standard streams, http://en.wikipedia.org/wiki/Standard_streams
+
+\bibitem{CUTEST} CuTest: C Unit Testing Framework, http://cutest.sourceforge.net/
+
+\bibitem{MAKE} Makefile, http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
+
+\bibitem{GXEMUL} GXemul, http://gxemul.sourceforge.net/
+
+\bibitem{NETBSD} The NetBSD Project, http://www.netbsd.org/
+
+\bibitem{SSH} Secure Shell (SSH), http://en.wikipedia.org/wiki/Secure_Shell
+
+\bibitem{GIT} git - the simple guide, http://rogerdudler.github.io/git-guide/
+
+\bibitem{PYTHON} Python, https://www.python.org/
+
+\bibitem{FLASK} Flask Quickstart, http://flask.pocoo.org/docs/0.10/quickstart/
+
+\bibitem{JQUERY} jQuery, http://jquery.com/
+
+\bibitem{LATEX} LaTex, http://www.latex-project.org/
 
 \end{thebibliography}
 
