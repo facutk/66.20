@@ -1,3 +1,14 @@
+/*
+ ==========================================================================
+ Name        : myfprintf.c
+ Author      : Tkaczyszyn, Facundo
+ Version     : 1.0
+ Description : Wrapper around fprintf.
+               If output file is NULL grabs all the output into a buffer.
+               This is used to unit test the mandelbrot module.
+ ==========================================================================
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
