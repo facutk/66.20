@@ -16,7 +16,8 @@ int mandelbrot( int res_x,
                 double c_im,
                 double width,
                 double height,
-                FILE * output ) {
+                FILE * output,
+                int (*pfprintf)(FILE * , const char *, ...) ) {
 
     // hack to solve issue when Resolution == 1 
     if ( res_x == 1) width = 0; if ( res_y == 1) height = 0;
@@ -42,7 +43,7 @@ int mandelbrot( int res_x,
     double er_sq = escape_radius*escape_radius;
 
     // PGM header
-    myfprintf( output,"P2\n%d\n%d\n%d\n", res_x, res_y, max_it );
+    (*pfprintf)( output,"P2\n%d\n%d\n%d\n", res_x, res_y, max_it );
 
     // iterate over the coordinates and write the data
     for( it_y = res_y; it_y > 0 ; it_y-- ) {
@@ -60,9 +61,9 @@ int mandelbrot( int res_x,
                 z_x_sq = z_x * z_x;
                 z_y_sq = z_y * z_y;
             };
-            myfprintf( output, "%3d ", it);
+            (*pfprintf)( output, "%3d ", it);
         }
-        myfprintf( output, "\n");
+        (*pfprintf)( output, "\n");
     }
     return 0;
 }

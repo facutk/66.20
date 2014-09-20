@@ -36,7 +36,8 @@ int main(int argc, char** argv) {
                     c_im,
                     width,
                     height,
-                    output );
+                    output,
+                    fprintf );
         return 0;
     }
     return 1;

@@ -4,6 +4,7 @@
 /* 
  * mandelbrot test cases
  * */
+#include "../src/myfprintf.h"
 
 void test_mandelbrot_01(CuTest *tc) {
 
@@ -23,7 +24,8 @@ void test_mandelbrot_01(CuTest *tc) {
                0.0, // center imaginary
                4.0, // width
                4.0, // height
-              NULL  // output NULL writes to internal buffer
+              NULL, // output NULL writes to internal buffer
+         myfprintf  // fprintf replacement for unit testing
                 );
 
     myfprintf_cpy( actual );
@@ -58,7 +60,8 @@ void test_mandelbrot_02(CuTest *tc) {
                0.0, // center imaginary
                4.0, // width
                4.0, // height
-              NULL  // output NULL writes to internal buffer
+              NULL, // output NULL writes to internal buffer
+         myfprintf  // fprintf replacement for unit testing
                 );
 
     myfprintf_cpy( actual );

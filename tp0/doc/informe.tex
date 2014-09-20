@@ -30,29 +30,93 @@
 
 
 \begin{abstract}
-Este primer template es un modelo \cite{INT06} que proporciona a los alumnos las instrucciones necesarias para preparar sus informes para la asignatura \textit{66.20 Organización de Computadoras} (práctica Viernes). El informe podrá contener (optativo) un resumen de no más de 150 palabras. La primera página del artículo deberá seguir el formato que se ilustra en el presente modelo y deberá contener el título, los nombres de los autores, sus números de padrón, sus direcciones de e-mail, y el resumen (si tuviese). La primera página del informe no debe ser numerada.
+Este primer template es un modelo \cite{INT06} que proporciona
+a los alumnos las instrucciones necesarias para preparar sus informes para la asignatura
+\textit{66.20 Organización de Computadoras} (práctica Viernes).
+El informe podrá contener (optativo) un resumen de no más de 150 palabras.
+La primera página del artículo deberá seguir el formato que se ilustra en el presente modelo y deberá 
+contener el título, los nombres de los autores, sus números de padrón, sus direcciones de e-mail, y el resumen (si tuviese). La primera página del informe no debe ser numerada.
 \end{abstract}
 
 
 \pagebreak
 
 \tableofcontents
+\thispagestyle{empty}   % quita el número en esta página
 \pagebreak
 
 \section{Introducción}
+\subsection{Número Complejo}
 
-Este artículo es un modelo que proporciona a los alumnos las instrucciones necesarias para preparar sus informes para la asignatura \textit{66.20 Organización de Computadoras} (práctica Viernes). Además de la estructura presentada, el informe podría contener otras secciones y subsecciones, a continuación de la introducción. Podrá  incluir (se recomienda) gráficos ilustrativos y/o tablas. El informe finaliza con una sección de conclusiones, y las citas bibliográficas consultadas siguiendo, rigurosamente, el formato presentado al final de este modelo. También se recomienda respectar el estilo tipográfico mostrado aquí (fuente Times Roman de 10 puntos, u otras similares)
+Un número complejo es un número, pero diferente de los número normales.
+
+Se puede representar juntado dos números.
+
+La primera parte es un número real.
+
+La segunda parte de un número complejo es un número imaginario.
+
+La parte mas importante del número imaginario se la conoce como i, definida como $\sqrt{-1}$.
+
+Todos los demas números imaginarios son el número i multiplicado por un número real.
+
+Al número complejo lo podemos escribir como a+bi, siendo a y b números reales.
+
+Dado que este número tiene dos componentes, la real y la imaginaria, podemos usar esas componentes para representarlo en un sistema de coordenadas Cartesianadas.
+
+Esta representación la conocemos como plano complejo.
+
+\subsection{Mandelbrot}
+
+El set de Mandelbrot es un fractal.
+
+Empieza con la ecuación: 
+
+$Z_{n+1} = Z^{2}_n + c$
+
+Donde c y z son número complejos y n es cero o un número entero positivo.
+
+Empezando en $z_0 = 0$, c esta en el set de Mandelbrot si el valor absoluto de $Z_n$ nunca excede cierto número. 
+
+Tomando por ejemplo, c = 1+0i. La secuencia es 0, 1, 2, 5, 26... que se va a infínito. Por lo tanto 1+0i no pertenece al conjunto.
+
+Por otro lado, si tomamos c = 0+1i, la secuencia es 0, i, (-1 + i), -i, (-1 + i), -i, que no se va al infinito, entonces pertenece al conjunto de mandelbrot.
+
+La intensidad del color estada dada por la cantidad de iteraciones que tiene que hacer el algoritmo hasta exceda el valor absoluto, o se alcanze una cantidad maxima de iteraciones.
+    
 
 \pagebreak
 
-\section{Corridas de prueba}
+\section{Análisis}
+\subsection{Formato PGM}
+
+Este artículo es un modelo que proporciona a los alumnos las instrucciones necesarias para preparar sus 
+informes para la asignatura \textit{66.20 Organización de Computadoras} (práctica Viernes).
+Además de la estructura presentada, el informe podría contener otras secciones y subsecciones,
+a continuación de la introducción. Podrá  incluir (se recomienda) gráficos ilustrativos y/o tablas.
+El informe finaliza con una sección de conclusiones, y las citas bibliográficas consultadas siguiendo, 
+rigurosamente, el formato presentado al final de este modelo.
+También se recomienda respectar el estilo tipográfico mostrado aquí
+(fuente Times Roman de 10 puntos, u otras similares)
+
+\section{Diseño}
+
+\section{Construcción}
+\subsection{Makefile}
+\subsection{TDD}
+
+\section{Pruebas}
+\subsection{Pruebas Unitarias}
+
+
+\subsection{Corridas de prueba}
 
 Documentamos tres corridas de prueba. Definimos centro y tamaño de ventana y
 generamos una salida por consola con baja resolucion, y luego una con mayor
 resolucion y convertimos en grafico.
 
 
-\subsection{Este es el Título de una Subsección}
+\subsection{Centrado en 0, ventana de 2}
 
 Texto de la subsección...
 
@@ -95,7 +159,7 @@ Texto de la subsección...
 
 
 
-\subsection{Este es el Título de una Subsección}
+\subsection{Centrado en -0.165+1.039i, ventana de 0.006}
 
 Texto de la subsección...
 
@@ -137,7 +201,7 @@ Texto de la subsección...
 
 
 
-\subsection{Este es el Título de una Subsección}
+\subsection{Centrado en -0.027+0.709i, ventana de 0.009}
 
 Texto de la subsección...
 
@@ -181,59 +245,38 @@ Texto de la subsección...
 
 Texto de la seccion...
 
-\subsection{main.c}
-\begin{lstlisting}[
-    language=c,
-    basicstyle=\small\ttfamily
-]
-
-
-\end{lstlisting}
-
-\subsection{default\_values.c}
-\begin{lstlisting}[
-    language=c,
-    basicstyle=\small\ttfamily
-]
-
-\end{lstlisting}
+\subsection{default\_values.h}
+\lstinputlisting[ language=c, basicstyle=\small\ttfamily ]{../src/default_values.h}
 \pagebreak
 
-
-\subsection{parse\_opt.c}
-\begin{lstlisting}[
-    language=c,
-    basicstyle=\small\ttfamily
-]
-
-
-\end{lstlisting}
+\subsection{main.c}
+\lstinputlisting[ language=c, basicstyle=\small\ttfamily ]{../src/main.c}
 \pagebreak
 
 \subsection{mandelbrot.c}
+\lstinputlisting[ language=c, basicstyle=\small\ttfamily ]{../src/mandelbrot.c}
+\pagebreak
 
-\begin{lstlisting}[
-    language=c,
-    basicstyle=\small\ttfamily
-]
+\subsection{parse\_opt.c}
+\lstinputlisting[ language=c, basicstyle=\small\ttfamily ]{../src/parse_opt.c}
+\pagebreak
 
-\end{lstlisting}
+\subsection{myfprintf.c}
+\lstinputlisting[ language=c, basicstyle=\small\ttfamily ]{../src/myfprintf.c}
 \pagebreak
 
 
 
-\section{Pruebas}
 
-El desarrollo y validacion del desarrollo se baso en un set de pruebas unitarias.
-Como framework de unittesting elegimos CuTest, debido a su portabilidad y su facilidad para compilar en MIPS.
+
 
 \section{Extras}
-
-Desarrollamos un wrapper en Python
-
+\subsection{Render Online}
 \href{http://home.facu.tk/mandelbrot}{http://home.facu.tk/mandelbrot}
-
-\section{Repositorio}
+\subsubsection{Flask}
+Desarrollamos un wrapper en Python
+\subsubsection{jQuery}
+\subsection{Repositorio}
 
 El codigo fuente del tp, el wrapper y este documento esta alojado en github.
 
@@ -248,19 +291,19 @@ Se presentó un modelo para que los alumnos puedan tomar como referencia en la re
 
 \bibitem{MANDEL01} Introduction to the Mandelbrot Set, http://www.ddewey.net/mandelbrot/
 
-\bibitem{MANDEL02} Mandelbrot set, http://en.wikipedia.org/wiki/Mandelbrot_set
+\bibitem{MANDEL02} Mandelbrot set, http://en.wikipedia.org/wiki/Mandelbrot\_set
 
-\bibitem{MANDELCODE} Mandelbrot C Renderer, http://rosettacode.org/wiki/Mandelbrot_set#PPM_non_interactive
+\bibitem{MANDELCODE} Mandelbrot C Renderer, http://rosettacode.org/wiki/Mandelbrot\_set
 
-\bibitem{PGM} PGM format, http://en.wikipedia.org/wiki/Netpbm_format#PGM_example
+\bibitem{PGM} PGM format, http://en.wikipedia.org/wiki/Netpbm\_format
 
-\bibitem{GETOPT} getopt_long(3), http://linux.die.net/man/3/getopt_long
+\bibitem{GETOPT} getopt\_long(3), http://linux.die.net/man/3/getopt\_long
 
 \bibitem{SSCANF} sscanf(3), http://linux.die.net/man/3/sscanf
 
 \bibitem{FWRITE} fwrite(3), http://man7.org/linux/man-pages/man3/fwrite.3.html
 
-\bibitem{STDOUT} Standard streams, http://en.wikipedia.org/wiki/Standard_streams
+\bibitem{STDOUT} Standard streams, http://en.wikipedia.org/wiki/Standard\_streams
 
 \bibitem{CUTEST} CuTest: C Unit Testing Framework, http://cutest.sourceforge.net/
 
@@ -270,7 +313,7 @@ Se presentó un modelo para que los alumnos puedan tomar como referencia en la re
 
 \bibitem{NETBSD} The NetBSD Project, http://www.netbsd.org/
 
-\bibitem{SSH} Secure Shell (SSH), http://en.wikipedia.org/wiki/Secure_Shell
+\bibitem{SSH} Secure Shell (SSH), http://en.wikipedia.org/wiki/Secure\_Shell
 
 \bibitem{GIT} git - the simple guide, http://rogerdudler.github.io/git-guide/
 
