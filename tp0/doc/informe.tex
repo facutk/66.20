@@ -104,6 +104,7 @@ También se recomienda respectar el estilo tipográfico mostrado aquí
 \section{Construcción}
 \subsection{Makefile}
 \subsection{TDD}
+\pagebreak
 
 \section{Pruebas}
 \subsection{Pruebas Unitarias}
@@ -247,6 +248,7 @@ Texto de la seccion...
 
 \subsection{default\_values.h}
 \lstinputlisting[ language=c, basicstyle=\small\ttfamily ]{../src/default_values.h}
+
 \pagebreak
 
 \subsection{main.c}
@@ -261,21 +263,115 @@ Texto de la seccion...
 \lstinputlisting[ language=c, basicstyle=\small\ttfamily ]{../src/parse_opt.c}
 \pagebreak
 
-\subsection{myfprintf.c}
-\lstinputlisting[ language=c, basicstyle=\small\ttfamily ]{../src/myfprintf.c}
+
+\section{Extras}
+
+\subsection{Render Online}
+
+\href{http://home.facu.tk/mandelbrot}{http://home.facu.tk/mandelbrot}
+
+\subsubsection{Flask}
+
+Desarrollamos un wrapper en Python\cite{PYTHON} para tomar los parametros de un query string http, y mapearlos a un comando de linea de comandos.
+
+\begin{lstlisting}[ language=bash, basicstyle=\small\ttfamily ]
+    http://SERVER/?opcion=argumento
+\end{lstlisting}
+
+lo mapeamos a:
+
+\begin{lstlisting}[ language=bash, basicstyle=\small\ttfamily ]
+    ./tp0 -opcion argumento
+\end{lstlisting}
+
+Para la parte web utilizamos Flask\cite{FLASK}, un framework de desarrollo web liviano escrito en Python.
+
+Se detalla abajo la parte relevante del codigo.
+
+\begin{lstlisting}[
+        language=python,
+        basicstyle=\small\ttfamily 
+                  ]
+
+    ...
+    @app.route("/mandelbrot.gif")
+    def mandelbrot():
+    ...
+        subprocess.call( "./tp0",
+                         "-o salida.out",
+                         "-r %s"%(request.args.get('res', '') )
+                        )
+    ...
+        Image.open( "salida.out" ).convert("RGB").save( "salida.gif" )
+        return send_file( "salida.gif", mimetype='image/gif' )
+    ...
+
+\end{lstlisting}
+
 \pagebreak
 
 
-
-
-
-
-\section{Extras}
-\subsection{Render Online}
-\href{http://home.facu.tk/mandelbrot}{http://home.facu.tk/mandelbrot}
-\subsubsection{Flask}
-Desarrollamos un wrapper en Python
 \subsubsection{jQuery}
+
+Utilizamos el framework de javascript jQuery \cite{JQUERY} para manejar el
+click del usuario sobre la imagen.
+
+HTML
+
+\begin{lstlisting}[
+            language=html,
+            basicstyle=\small\ttfamily 
+                  ]
+
+<html>
+    <head>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="mandelmap.js"></script>
+    </head>
+    <body>
+        <img id="mandelmap">
+    </body>
+</html>
+
+\end{lstlisting}
+
+Javascript
+
+\begin{lstlisting}[
+            language=java,
+            basicstyle=\small\ttfamily 
+                  ]
+
+var res = "320x240";
+var z = 4;
+var zFactor = 1.5;
+var c_re = 0;
+var c_im = 0; 
+$(document).ready(function(){
+    $( "#mandelmap" ).on( "click", function(e) {
+        
+        c_re = ( xpos*( z / this.width ) + ( c_re - (z / 2) ) );
+        c_im = ( ( c_im + (z / 2) ) - z*( ypos / this.height ) );
+        c_im_sign = ( c_im < 0 )? '':'+';
+        z = z / zFactor;
+        
+        $("#mandelmap").attr(
+            "src",
+            "http://localhost:5000/mandelbrot.gif" +
+            "?" +
+            "res=" + res +
+            "&w=" + z +
+            "&h=" + z +// );
+            "&center=" + c_re + c_im_sign + c_im + "i" );
+        });
+});
+
+\end{lstlisting}
+
+
+
+\pagebreak
+
 \subsection{Repositorio}
 
 El codigo fuente del tp, el wrapper y este documento esta alojado en github.
