@@ -30,22 +30,11 @@
 
 
 \begin{abstract}
-Este primer template es un modelo \cite{INT06} que proporciona
-a los alumnos las instrucciones necesarias para preparar sus informes para la asignatura
-\textit{66.20 Organización de Computadoras} (práctica Viernes).
-El informe podrá contener (optativo) un resumen de no más de 150 palabras.
-La primera página del artículo deberá seguir el formato que se ilustra en el presente modelo y deberá 
-contener el título, los nombres de los autores, sus números de padrón, sus direcciones de e-mail, y el resumen (si tuviese). La primera página del informe no debe ser numerada.
-
-Este artículo es un modelo que proporciona a los alumnos las instrucciones necesarias para preparar sus 
-informes para la asignatura \textit{66.20 Organización de Computadoras} (práctica Viernes).
-Además de la estructura presentada, el informe podría contener otras secciones y subsecciones,
-a continuación de la introducción. Podrá  incluir (se recomienda) gráficos ilustrativos y/o tablas.
-El informe finaliza con una sección de conclusiones, y las citas bibliográficas consultadas siguiendo, 
-rigurosamente, el formato presentado al final de este modelo.
-También se recomienda respectar el estilo tipográfico mostrado aquí
-(fuente Times Roman de 10 puntos, u otras similares)
-
+El set de Mandelbrot es un \textit{fractal}. A lo largo de este trabajo práctico lo
+analizamos, y construimos un programa que permite dibujarlo centrado y acercado
+a donde se le indique.
+Este informe refleja las consideraciones que tomamos al encarar el trabajo
+práctico, las pruebas y el código fuente entregable.
 \end{abstract}
 
 
@@ -58,84 +47,162 @@ También se recomienda respectar el estilo tipográfico mostrado aquí
 \section{Introducción}
 \subsection{Número Complejo}
 
-Un número complejo es un número, pero diferente de los número normales.
-
-Se puede representar juntado dos números.
-
-La primera parte es un número real.
-
-La segunda parte de un número complejo es un número \textit{imaginario}.
-
-La parte mas importante del número imaginario se la conoce como i, definida como $\sqrt{-1}$.
-
-Todos los demas números imaginarios son el número i multiplicado por un número real.
-
-Al número complejo lo podemos escribir como a+bi, siendo a y b números reales.
-
-Dado que este número tiene dos componentes, la real y la imaginaria, podemos usar esas componentes para representarlo en un sistema de coordenadas Cartesianadas.
-
+Un número complejo\cite{CMPLX} es un número, pero diferente de los número normales.  \\
+Se puede representar juntado dos números.\\
+La primera parte es un número real. La segunda parte de un número complejo es un número \textit{imaginario}\cite{IMAGN}. \\
+\\
+La parte mas importante del número imaginario se la conoce como i, definida como $\sqrt{-1}$. Todos los demas números imaginarios son el número i multiplicado por un número real. \\
+\\
+Al número complejo lo podemos escribir como a+bi, siendo a y b números reales. \\
+Dado que este número tiene dos componentes, la real y la imaginaria, podemos usar esas componentes para representarlo en un sistema de coordenadas Cartesianadas.  \\
 Esta representación la conocemos como plano complejo.
 
 \subsection{Mandelbrot}
 
-El set de Mandelbrot es un fractal.
-
-Empieza con la ecuación: 
-
+El set de Mandelbrot\cite{MNDL1}\cite{MNDL2} es un fractal.  \\
+\\
+Empieza con la ecuación: \\
+%\\
+\begin{center}
 $Z_{n+1} = Z^{2}_n + c$
-
-Donde c y z son número complejos y n es cero o un número entero positivo.
-
-Empezando en $z_0 = 0$, c esta en el set de Mandelbrot si el valor absoluto de $Z_n$ nunca excede cierto número. 
-
-Tomando por ejemplo, c = 1+0i. La secuencia es 0, 1, 2, 5, 26... que se va a infínito. Por lo tanto 1+0i no pertenece al conjunto.
-
-Por otro lado, si tomamos c = 0+1i, la secuencia es 0, i, (-1 + i), -i, (-1 + i), -i, que no se va al infinito, entonces pertenece al conjunto de mandelbrot.
-
-La intensidad del color estada dada por la cantidad de iteraciones que tiene que hacer el algoritmo hasta exceda el valor absoluto, o se alcanze una cantidad maxima de iteraciones.
-    
+\end{center}
+%\\
+Donde c y z son número complejos y n es cero o un número entero positivo. \\
+\\
+Empezando en $z_0 = 0$, c esta en el set de Mandelbrot si el valor absoluto de $Z_n$ nunca excede cierto número. \\
+\\
+Tomando por ejemplo, c = 1+0i. La secuencia es 0, 1, 2, 5, 26... que se va a infínito. Por lo tanto 1+0i no pertenece al conjunto. \\
+Por otro lado, si tomamos c = 0+1i, la secuencia es 0, i, (-1 + i), -i, (-1 + i), -i, que no se va al infinito, entonces pertenece al conjunto de mandelbrot.  \\
+La intensidad del color estada dada por la cantidad de iteraciones que tiene que hacer el algoritmo hasta exceda el valor absoluto, o se alcanze una cantidad maxima de iteraciones.  \\
 
 \pagebreak
 
 \section{Análisis}
 
-\subsection{Formato PGM}
+\subsection{Interfaz}
 
-El formato PGM es una formato para almacenar informacion grafica en un texto
-plano.
+El programa tiene que ser capaz de leer argumentos pasados por linea de comandos.  \\
+\\
+Para parametros como la resolucion ( ej: 640x480 ), o el centro ( ej: 1-4.5i), debe validar que se cumpla con el formato correcto y se traiga el tipo de dato correcto.
 
-Se detalla abajo un ejemplo de un puntito blanco.
+\subsection{Salida}
+
+\subsubsection{Archivo/Salida Standard}
+
+El programa toma el parametro de entrada y debe decidir si tiene que salir a un archivo, o salir por salida standard\cite{STDOU}. \\
+En caso que salga por un archivo debe validar que sea posible la escritura al mismo.
+
+\subsubsection{Formato PGM}
+
+El formato PGM\cite{PGM01} es una formato para almacenar informacion grafica en un texto plano.  \\
+\\
+Se detalla abajo un ejemplo de un cuadrado negro sobre un fondo blanco.
 
 \begin{lstlisting}[
     language=bash,
     basicstyle=\small\ttfamily
 ]
 
-P2  #Header
-1   # Cantidad de filas
-1   # Cantidad de columnas
-255 # Maximo valor que puede tener un punto
-255 # Matriz de puntos
+    P2              #Header
+    4               # Cantidad de filas
+    4               # Cantidad de columnas
+    255             # Maximo valor que puede tener un punto
+    255 225 255 255 # Matriz de puntos
+    255   0   0 255 
+    255   0   0 255 
+    255 225 255 255 
 
 \end{lstlisting}
 
-\subsection{Linea de comandos}
-
-El programa tiene que ser capaz de leer argumentos pasados por linea de
-comandos.
-
-\subsection{Salida standard}
+\pagebreak
 
 \section{Diseño}
+\subsection{Consideraciones}
+El primer paso de este desarrollo fue el de discretizar el centro y ventana pedidas a una cantidad de punto finita en el plano complejo.  \\
+Buscando un poco, encontramos un ejemplo sobre el cual nos basamos en Rossetta Code\cite{MNDLC}.\\
+\\
+Para tomar los parametros que el usuario le pasa a nuestro programa por consola utilizamos getopt\_long\cite{GETOP}.  \\
+Luego, para validar que los argumentos pasados cumplan con los formatos esperados usamos sscanf\cite{SSCAN}.  \\
+Finalmente, para cada punto procesado que debemos escribir a un archivo, utilizamos fwrite\cite{FWRIT},
+ya que su interfaz pide un identificador de archivo y el texto que vamos a escribir.
+Esto nos permite usar la misma funcion si estamos escribiendo a un archivo o a salida standard.\\
+\\
+El modulo donde calculamos los valores para los puntos y escribimos a un archivo
+nos planteo un problema de diseño. Lo escribimos de forma tal que no instanciara
+memoria, simplemente discretiza los puntos, calcula la intensidad para cada
+punto y lo escribe a al archivo.\\
+Este enfoque no era testeable.  \\
+\\
+Una alternativa era separar la funcionalidad de discretizacion y calculo, de la de escritura al archivo.  \\
+\\
+La alternativa por la que optamos fue aplicar Inversion de
+dependencias\cite{DIP} en el modulo que discretiza, calcula y escribe, pasandole
+por parametro cual es la funcion que debe usar a la hora de escribir.
+De esta forma, al compilarlo para la entrega se utiliza la funcion fwrite. Pero
+cuando se compila para pruebas se utiliza una funcion fwrite propia, con la
+misma firma, pero que en vez de escribir al archivo, escribe a un buffer interno
+contra el cual despues comparamos los resultados esperados.
+
+\pagebreak
 
 \section{Construcción}
 \subsection{Makefile}
-\subsection{TDD}
+Como primer paso para asegurarnos que siempre se va a compilar igual, usando las
+mismas fuentes, con los mismos niveles de optimizacion en las diferentes
+plataformas donde desarrollaramos y testearamos, escribimos un
+Makefile\cite{MAKE} con tres targets: all, tests y clean.
+\\
+all compila el codigo para la entrega, tests compila y corre las pruebas
+unitarias, clean borra los ejecutables compilados.
+
+\subsection{Pruebas Unitarias}
+Para validar todos los requisitos funcionales escribimos pruebas unitarias.  \\
+Como framework de pruebas utilizamos CuTest\cite{CUTST} por su portabilidad al
+Netbsd de pruebas. \\
+\\
+Detallamos las firmas de algunas de las pruebas que escribimos para validar los
+requisitos. Como el codigo de estas pruebas escapa al alcance de la entrega no
+lo incluimos en el codigo impreso, pero se encuentra disponible en el repositorio\cite{REPO}.  \\
+\begin{lstlisting}[
+    language=c,
+    basicstyle=\small\ttfamily
+]
+
+    /*
+     *  --width w
+     */
+        // Si le pasamos 10, esperamos 10
+        test_parse_width_gets_10_returns_10
+
+        // Si le pasamos una A, esperamos un error
+        test_parse_width_gets_A_halts
+
+        // Si le pasamos un ancho negativo, esperamos un error
+        test_parse_width_gets_negative_halts
+
+    /*
+     *  --resolution rx_ry
+     */
+        // Si le pasamos una resolucion 16x12, esperamos 16x12
+        test_parse_resolution_gets_16x12_returns_16x12
+
+        // Si algun componente es negativo, esperamos error
+        test_parse_resolution_gets_negative_halts
+
+    /*
+     *  --center a+bi
+     */
+        // Si se invoca al parametro pero vuelve vacio, esperamos error
+        test_parse_center_gets_empty_halts
+
+        // Si le pasamos 1-2i, esperamos 1-2i
+        test_parse_center_gets_1_2i_neg_returns_1_2i_neg
+
+\end{lstlisting}
+
 \pagebreak
 
 \section{Pruebas}
-\subsection{Pruebas Unitarias}
-
 
 \subsection{Corridas de prueba}
 
@@ -145,8 +212,6 @@ resolución que convertimos en gráfico.
 
 
 \subsection{Centrado en 0, ventana de 2}
-
-Texto de la subsección...
 
 \begin{lstlisting}[
     language=bash,
@@ -184,13 +249,7 @@ Texto de la subsección...
 \pagebreak
 
 
-
-
-
 \subsection{Centrado en -0.165+1.039i, ventana de 0.006}
-
-Texto de la subsección...
-
 \begin{lstlisting}[
     language=bash,
     basicstyle=\small\ttfamily
@@ -231,8 +290,6 @@ Texto de la subsección...
 
 \subsection{Centrado en -0.027+0.709i, ventana de 0.009}
 
-Texto de la subsección...
-
 \begin{lstlisting}[
     language=bash,
     basicstyle=\small\ttfamily
@@ -269,9 +326,46 @@ Texto de la subsección...
 
 \pagebreak
 
-\section{Codigo Fuente}
+\subsection{Pruebas Unitarias}
 
-Texto de la seccion...
+Para correr las pruebas unitarias, invocamos al target test de nuestro makefile.  Abajo exponemos el resultado de dicha corrida.
+
+\begin{lstlisting}[
+    language=bash,
+    basicstyle=\small\ttfamily
+]
+
+    make tests
+
+    ./tests
+    .....................
+
+    OK (21 tests)
+
+
+\end{lstlisting}
+
+\subsection{Emulador MIPS}
+
+Para correr las pruebas sobre el NetBSD\cite{NTBSD}, corremos el
+GXemul\cite{GXEML} tal como se nos explico en clase y luego copiamos la carpeta
+mediante SSH\cite{SSH}, con el comando SCP. Navegamos hasta la carpeta del
+makefile y escribimos.
+
+\begin{lstlisting}[
+    language=bash,
+    basicstyle=\small\ttfamily
+]
+
+    make tests
+
+\end{lstlisting}
+
+\pagebreak
+
+\section{Código Fuente}
+
+Se expone el código fuente del programa. El código fuente de las pruebas unitarias se encuentra en el repositorio\cite{REPO}\\
 
 \subsection{default\_values.h}
 \lstinputlisting[ language=c, basicstyle=\small\ttfamily ]{../src/default_values.h}
@@ -295,11 +389,16 @@ Texto de la seccion...
 
 \subsection{Render Online}
 
+Luego que concluimos con la construcción y las pruebas, fuimos un paso mas y
+desarrollamos una interfaz para tomar parametros via web, y la matriz de salida
+generada convertirla en una imagen. Se encuentra disponible en
 \href{http://home.facu.tk/mandelbrot}{http://home.facu.tk/mandelbrot}
+y el código en la carpeta del repositorio\cite{REPO}.\\
 
 \subsubsection{Flask}
 
-Desarrollamos un wrapper en Python\cite{PYTHON} para tomar los parametros de un query string http, y mapearlos a un comando de linea de comandos.
+Desarrollamos un wrapper en Python\cite{PYTHN} para tomar los parametros de un query
+string HTTP, y mapearlos a un comando de linea de comandos.
 
 \begin{lstlisting}[ language=bash, basicstyle=\small\ttfamily ]
     http://SERVER/?opcion=argumento
@@ -313,7 +412,7 @@ lo mapeamos a:
 
 Para la parte web utilizamos Flask\cite{FLASK}, un framework de desarrollo web liviano escrito en Python.
 
-Se detalla abajo la parte relevante del codigo.
+Se detalla abajo la parte relevante del código.
 
 \begin{lstlisting}[
         language=python,
@@ -340,29 +439,8 @@ Se detalla abajo la parte relevante del codigo.
 
 \subsubsection{jQuery}
 
-Utilizamos el framework de javascript jQuery \cite{JQUERY} para manejar el
-click del usuario sobre la imagen.
-
-HTML
-
-\begin{lstlisting}[
-            language=html,
-            basicstyle=\small\ttfamily 
-                  ]
-
-<html>
-    <head>
-        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script type="text/javascript" src="mandelmap.js"></script>
-    </head>
-    <body>
-        <img id="mandelmap">
-    </body>
-</html>
-
-\end{lstlisting}
-
-Javascript
+Utilizamos el framework de javascript jQuery \cite{JQERY} para manejar el click del usuario sobre la imagen.  \\
+Exponemos la parte relevante.
 
 \begin{lstlisting}[
             language=java,
@@ -401,50 +479,63 @@ $(document).ready(function(){
 
 \subsection{Repositorio}
 
-El codigo fuente del tp, el wrapper y este documento esta alojado en github.
+El codigo fuente del tp, el wrapper y este documento esta alojado en github\cite{GIT}.
 
 \href{https://github.com/facutk/66.20}{https://github.com/facutk/66.20}
 
 \section{Conclusiones}
 
-Se presentó un modelo para que los alumnos puedan tomar como referencia en la redacción de sus informes de trabajos prácticos.
+A lo largo del desarrollo del trabajo practico nos fuimos familiarizando con
+diversas funciones y librerias standard de C que nos facilitaron la entrada y
+validacion de parametros. Pudimos aplicar conceptos de analisis, desarrollo y
+calidad aprendidos en otras materias. Ejercitamos la practica con tuneles SSH
+hacia un emulador. Ademas aprendimos mucho acerca de LaTex\cite{LATEX} para
+realizar la redacción del informe del trabajo práctico.
 
 
 \begin{thebibliography}{99}
 
-\bibitem{MANDEL01} Introduction to the Mandelbrot Set, http://www.ddewey.net/mandelbrot/
+\bibitem{CMPLX} Complex Number, http://en.wikipedia.org/wiki/Complex\_number
 
-\bibitem{MANDEL02} Mandelbrot set, http://en.wikipedia.org/wiki/Mandelbrot\_set
+\bibitem{IMAGN} Imaginary Number, http://en.wikipedia.org/wiki/Imaginary\_number
 
-\bibitem{MANDELCODE} Mandelbrot C Renderer, http://rosettacode.org/wiki/Mandelbrot\_set
+\bibitem{MNDL1} Introduction to the Mandelbrot Set, http://www.ddewey.net/mandelbrot/
 
-\bibitem{PGM} PGM format, http://en.wikipedia.org/wiki/Netpbm\_format
+\bibitem{MNDL2} Mandelbrot set, http://en.wikipedia.org/wiki/Mandelbrot\_set
 
-\bibitem{GETOPT} getopt\_long(3), http://linux.die.net/man/3/getopt\_long
+\bibitem{STDOU} Standard streams, http://en.wikipedia.org/wiki/Standard\_streams
 
-\bibitem{SSCANF} sscanf(3), http://linux.die.net/man/3/sscanf
+\bibitem{PGM01} PGM format, http://en.wikipedia.org/wiki/Netpbm\_format
 
-\bibitem{FWRITE} fwrite(3), http://man7.org/linux/man-pages/man3/fwrite.3.html
+\bibitem{MNDLC} Mandelbrot C Renderer, http://rosettacode.org/wiki/Mandelbrot\_set
 
-\bibitem{STDOUT} Standard streams, http://en.wikipedia.org/wiki/Standard\_streams
+\bibitem{GETOP} getopt\_long(3), http://linux.die.net/man/3/getopt\_long
 
-\bibitem{CUTEST} CuTest: C Unit Testing Framework, http://cutest.sourceforge.net/
+\bibitem{SSCAN} sscanf(3), http://linux.die.net/man/3/sscanf
+
+\bibitem{FWRIT} fwrite(3), http://man7.org/linux/man-pages/man3/fwrite.3.html
+
+\bibitem{DIP} Dependency inversion principle, http://en.wikipedia.org/wiki/Dependency\_inversion\_principle
 
 \bibitem{MAKE} Makefile, http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
 
-\bibitem{GXEMUL} GXemul, http://gxemul.sourceforge.net/
+\bibitem{CUTST} CuTest: C Unit Testing Framework, http://cutest.sourceforge.net/
 
-\bibitem{NETBSD} The NetBSD Project, http://www.netbsd.org/
+\bibitem{NTBSD} The NetBSD Project, http://www.netbsd.org/
+
+\bibitem{GXEML} GXemul, http://gxemul.sourceforge.net/
 
 \bibitem{SSH} Secure Shell (SSH), http://en.wikipedia.org/wiki/Secure\_Shell
 
-\bibitem{GIT} git - the simple guide, http://rogerdudler.github.io/git-guide/
-
-\bibitem{PYTHON} Python, https://www.python.org/
+\bibitem{PYTHN} Python, https://www.python.org/
 
 \bibitem{FLASK} Flask Quickstart, http://flask.pocoo.org/docs/0.10/quickstart/
 
-\bibitem{JQUERY} jQuery, http://jquery.com/
+\bibitem{JQERY} jQuery, http://jquery.com/
+
+\bibitem{GIT} git - the simple guide, http://rogerdudler.github.io/git-guide/
+
+\bibitem{REPO} Repositorio, https://github.com/facutk/66.20
 
 \bibitem{LATEX} LaTex, http://www.latex-project.org/
 
