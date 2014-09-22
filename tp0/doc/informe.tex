@@ -36,6 +36,16 @@ a los alumnos las instrucciones necesarias para preparar sus informes para la as
 El informe podrá contener (optativo) un resumen de no más de 150 palabras.
 La primera página del artículo deberá seguir el formato que se ilustra en el presente modelo y deberá 
 contener el título, los nombres de los autores, sus números de padrón, sus direcciones de e-mail, y el resumen (si tuviese). La primera página del informe no debe ser numerada.
+
+Este artículo es un modelo que proporciona a los alumnos las instrucciones necesarias para preparar sus 
+informes para la asignatura \textit{66.20 Organización de Computadoras} (práctica Viernes).
+Además de la estructura presentada, el informe podría contener otras secciones y subsecciones,
+a continuación de la introducción. Podrá  incluir (se recomienda) gráficos ilustrativos y/o tablas.
+El informe finaliza con una sección de conclusiones, y las citas bibliográficas consultadas siguiendo, 
+rigurosamente, el formato presentado al final de este modelo.
+También se recomienda respectar el estilo tipográfico mostrado aquí
+(fuente Times Roman de 10 puntos, u otras similares)
+
 \end{abstract}
 
 
@@ -54,7 +64,7 @@ Se puede representar juntado dos números.
 
 La primera parte es un número real.
 
-La segunda parte de un número complejo es un número imaginario.
+La segunda parte de un número complejo es un número \textit{imaginario}.
 
 La parte mas importante del número imaginario se la conoce como i, definida como $\sqrt{-1}$.
 
@@ -88,16 +98,33 @@ La intensidad del color estada dada por la cantidad de iteraciones que tiene que
 \pagebreak
 
 \section{Análisis}
+
 \subsection{Formato PGM}
 
-Este artículo es un modelo que proporciona a los alumnos las instrucciones necesarias para preparar sus 
-informes para la asignatura \textit{66.20 Organización de Computadoras} (práctica Viernes).
-Además de la estructura presentada, el informe podría contener otras secciones y subsecciones,
-a continuación de la introducción. Podrá  incluir (se recomienda) gráficos ilustrativos y/o tablas.
-El informe finaliza con una sección de conclusiones, y las citas bibliográficas consultadas siguiendo, 
-rigurosamente, el formato presentado al final de este modelo.
-También se recomienda respectar el estilo tipográfico mostrado aquí
-(fuente Times Roman de 10 puntos, u otras similares)
+El formato PGM es una formato para almacenar informacion grafica en un texto
+plano.
+
+Se detalla abajo un ejemplo de un puntito blanco.
+
+\begin{lstlisting}[
+    language=bash,
+    basicstyle=\small\ttfamily
+]
+
+P2  #Header
+1   # Cantidad de filas
+1   # Cantidad de columnas
+255 # Maximo valor que puede tener un punto
+255 # Matriz de puntos
+
+\end{lstlisting}
+
+\subsection{Linea de comandos}
+
+El programa tiene que ser capaz de leer argumentos pasados por linea de
+comandos.
+
+\subsection{Salida standard}
 
 \section{Diseño}
 
@@ -113,8 +140,8 @@ También se recomienda respectar el estilo tipográfico mostrado aquí
 \subsection{Corridas de prueba}
 
 Documentamos tres corridas de prueba. Definimos centro y tamaño de ventana y
-generamos una salida por consola con baja resolucion, y luego una con mayor
-resolucion y convertimos en grafico.
+generamos una salida por consola con baja resolución, y luego una con mayor
+resolución que convertimos en gráfico.
 
 
 \subsection{Centrado en 0, ventana de 2}

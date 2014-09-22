@@ -1,3 +1,7 @@
+tp0/extras/venv
+tp0/extras/tp0
+tp0/extras/generated.pgm
+tp0/extras/generated.pgm.gif
 tp0/tp0
 tp0/tests
 *.dvi
@@ -5,3 +9,4 @@ tp0/tests
 *.log
 *.toc
 *.out
+*.pyc
