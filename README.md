@@ -19,7 +19,6 @@ cd extras
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
-python mandelbrotwrapper.py
 ```
 
 Web Renderizer Run
@@ -28,7 +27,7 @@ Web Renderizer Run
 ```sh
 cd 66.20/tp0/extras
 source venv/bin/activate
-python mandelbrotwrapper.py
+python run_server.py
 ```
 Then navigate to [http://localhost:5000]
 
