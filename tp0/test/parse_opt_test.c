@@ -222,7 +222,7 @@ void test_parse_output_gets_dash_returns_stdout(CuTest *tc) {
 
 void test_parse_output_gets_impossible_halts(CuTest *tc) {
     FILE * output;
-    char param[] = "/x";
+    char param[] = "/tmp";
 
     int expected = 1;
     int actual = parse_output( param, &output );
