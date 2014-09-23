@@ -14,7 +14,7 @@
 \author{
     Juan Facundo Tkaczyszyn , \textit{Padrón Nro. 87.931}                 \\
     \texttt{ facu.tk@gmail.com }                                          \\[2.5ex]
-    Santiago Weber, \textit{Padrón Nro. 00.000}                           \\
+    Santiago Weber, \textit{Padrón Nro. 93.789}                           \\
     \texttt{ santiago.weber91@gmail.com }                                 \\[2.5ex]
     \normalsize{2do. Cuatrimestre de 2014}                                \\
     \normalsize{66.20 Organización de Computadoras  $-$ Práctica Martes}  \\
@@ -79,7 +79,7 @@ La intensidad del color estada dada por la cantidad de iteraciones que tiene que
 
 \section{Análisis}
 
-\subsection{Interfaz}
+\subsection{Interfáz}
 
 El programa tiene que ser capaz de leer argumentos pasados por linea de comandos.  \\
 \\
@@ -94,7 +94,7 @@ En caso que salga por un archivo debe validar que sea posible la escritura al mi
 
 \subsubsection{Formato PGM}
 
-El formato PGM\cite{PGM01} es una formato para almacenar informacion grafica en un texto plano.  \\
+El formato PGM\cite{PGM01} es una formato para almacenar información gráfica en un texto plano.  \\
 \\
 Se detalla abajo un ejemplo de un cuadrado negro sobre un fondo blanco.
 
@@ -125,7 +125,7 @@ Para tomar los parametros que el usuario le pasa a nuestro programa por consola 
 Luego, para validar que los argumentos pasados cumplan con los formatos esperados usamos sscanf\cite{SSCAN}.  \\
 Finalmente, para cada punto procesado que debemos escribir a un archivo, utilizamos fwrite\cite{FWRIT},
 ya que su interfaz pide un identificador de archivo y el texto que vamos a escribir.
-Esto nos permite usar la misma funcion si estamos escribiendo a un archivo o a salida standard.\\
+Esto nos permite usar la misma función si estamos escribiendo a un archivo o a salida standard.\\
 \\
 El modulo donde calculamos los valores para los puntos y escribimos a un archivo
 nos planteo un problema de diseño. Lo escribimos de forma tal que no instanciara
@@ -133,13 +133,13 @@ memoria, simplemente discretiza los puntos, calcula la intensidad para cada
 punto y lo escribe a al archivo.\\
 Este enfoque no era testeable.  \\
 \\
-Una alternativa era separar la funcionalidad de discretizacion y calculo, de la de escritura al archivo.  \\
+Una alternativa era separar la funcionalidad de discretización y cálculo, de la de escritura al archivo.  \\
 \\
-La alternativa por la que optamos fue aplicar Inversion de
-dependencias\cite{DIP} en el modulo que discretiza, calcula y escribe, pasandole
-por parametro cual es la funcion que debe usar a la hora de escribir.
+La alternativa por la que optamos fue aplicar Inversión de
+dependencias\cite{DIP} en el módulo que discretiza, calcula y escribe, pasandole
+por parametro cual es la función que debe usar a la hora de escribir.
 De esta forma, al compilarlo para la entrega se utiliza la funcion fwrite. Pero
-cuando se compila para pruebas se utiliza una funcion fwrite propia, con la
+cuando se compila para pruebas se utiliza una función fwrite propia, con la
 misma firma, pero que en vez de escribir al archivo, escribe a un buffer interno
 contra el cual despues comparamos los resultados esperados.
 
@@ -148,12 +148,11 @@ contra el cual despues comparamos los resultados esperados.
 \section{Construcción}
 \subsection{Makefile}
 Como primer paso para asegurarnos que siempre se va a compilar igual, usando las
-mismas fuentes, con los mismos niveles de optimizacion en las diferentes
+mismas fuentes, con los mismos niveles de optimización en las diferentes
 plataformas donde desarrollaramos y testearamos, escribimos un
 Makefile\cite{MAKE} con tres targets: all, tests y clean.
 \\
-all compila el codigo para la entrega, tests compila y corre las pruebas
-unitarias, clean borra los ejecutables compilados.
+all compila el código para la entrega, tests compila y corre las pruebas unitarias, clean borra los ejecutables compilados.
 
 \subsection{Pruebas Unitarias}
 Para validar todos los requisitos funcionales escribimos pruebas unitarias.  \\
@@ -161,8 +160,8 @@ Como framework de pruebas utilizamos CuTest\cite{CUTST} por su portabilidad al
 Netbsd de pruebas. \\
 \\
 Detallamos las firmas de algunas de las pruebas que escribimos para validar los
-requisitos. Como el codigo de estas pruebas escapa al alcance de la entrega no
-lo incluimos en el codigo impreso, pero se encuentra disponible en el repositorio\cite{REPO}.  \\
+requisitos. Como el código de estas pruebas escapa al alcance de la entrega no
+lo incluimos en el código impreso, pero se encuentra disponible en el repositorio\cite{REPO}.  \\
 \begin{lstlisting}[
     language=c,
     basicstyle=\small\ttfamily
@@ -328,7 +327,8 @@ resolución que convertimos en gráfico.
 
 \subsection{Pruebas Unitarias}
 
-Para correr las pruebas unitarias, invocamos al target test de nuestro makefile.  Abajo exponemos el resultado de dicha corrida.
+Para correr las pruebas unitarias, invocamos al target test de nuestro makefile.
+Abajo exponemos el resultado de dicha corrida.
 
 \begin{lstlisting}[
     language=bash,
@@ -348,7 +348,7 @@ Para correr las pruebas unitarias, invocamos al target test de nuestro makefile.
 \subsection{Emulador MIPS}
 
 Para correr las pruebas sobre el NetBSD\cite{NTBSD}, corremos el
-GXemul\cite{GXEML} tal como se nos explico en clase y luego copiamos la carpeta
+GXemul\cite{GXEML} tal como se nos explicó en clase y luego copiamos la carpeta
 mediante SSH\cite{SSH}, con el comando SCP. Navegamos hasta la carpeta del
 makefile y escribimos.
 
@@ -390,7 +390,7 @@ Se expone el código fuente del programa. El código fuente de las pruebas unitari
 \subsection{Render Online}
 
 Luego que concluimos con la construcción y las pruebas, fuimos un paso mas y
-desarrollamos una interfaz para tomar parametros via web, y la matriz de salida
+desarrollamos una interfáz para tomar parámetros via web, y la matriz de salida
 generada convertirla en una imagen. Se encuentra disponible en
 \href{http://home.facu.tk/mandelbrot}{http://home.facu.tk/mandelbrot}
 y el código en la carpeta del repositorio\cite{REPO}.\\
@@ -479,16 +479,16 @@ $(document).ready(function(){
 
 \subsection{Repositorio}
 
-El codigo fuente del tp, el wrapper y este documento esta alojado en github\cite{GIT}.
+El código fuente del tp, el wrapper y este documento esta alojado en github\cite{GIT}.
 
 \href{https://github.com/facutk/66.20}{https://github.com/facutk/66.20}
 
 \section{Conclusiones}
 
-A lo largo del desarrollo del trabajo practico nos fuimos familiarizando con
+A lo largo del desarrollo del trabajo práctico nos fuimos familiarizando con
 diversas funciones y librerias standard de C que nos facilitaron la entrada y
-validacion de parametros. Pudimos aplicar conceptos de analisis, desarrollo y
-calidad aprendidos en otras materias. Ejercitamos la practica con tuneles SSH
+validación de parametros. Pudimos aplicar conceptos de análisis, desarrollo y
+calidad aprendidos en otras materias. Ejercitamos la práctica con tuneles SSH
 hacia un emulador. Ademas aprendimos mucho acerca de LaTex\cite{LATEX} para
 realizar la redacción del informe del trabajo práctico.
 
