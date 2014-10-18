@@ -1,5 +1,6 @@
 tp0/extras/venv
 tp0/extras/tp0
+tp0/extras/mandelbrot_util.pyc
 tp0/tp0
 tp0/tests
 *.dvi

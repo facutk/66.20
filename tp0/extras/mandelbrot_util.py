@@ -1,7 +1,5 @@
-#!/usr/bin/env python
 import os, subprocess
 import StringIO
-from flask import Flask, request, render_template, send_file
 from PIL import Image
 import numpy
 
@@ -33,16 +31,14 @@ def pgmdata2pil(pgmdata):
 
     return numpy.reshape(data, ( height, width ) )/float(maxGray)*255
 
-def imagefrompgmdata( pgmdata ):
-
+def pgm_to_image( pgmdata ):
     pgm = pgmdata2pil(pgmdata)
     if pgm is not None:
-
         return Image.fromarray(pgm)
 
-def giffrompgm( pgmdata ):
+def pgm_to_gif( pgmdata ):
 
-    im = imagefrompgmdata( pgmdata )
+    im = pgm_to_image( pgmdata )
     output = StringIO.StringIO()
     im = im.convert("RGB")
     im.save(output, format='GIF')
@@ -50,25 +46,11 @@ def giffrompgm( pgmdata ):
 
     return output
 
-
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    return render_template('index.html')
-
-@app.route("/mandelbrot.gif")
-def mandelbrot():
+def mandelbrot_pgm( res, center, w, h ):
 
     path = os.path.dirname(os.path.realpath(__file__))
     binary = path + "/./tp0"
 
-    res = request.args.get('res','')
-    center = request.args.get('center','')
-    w = request.args.get('w','')
-    h = request.args.get('h','')
-
-    #call binary
     call_string = []
     call_string.append( binary )
     if res:
@@ -80,13 +62,5 @@ def mandelbrot():
     if h:
         call_string.append( "-H%s"%( h ) )
     call_string.append( "-o-" )
-    pgmdata = subprocess.check_output( call_string )
 
-    #convert to gif
-    gifdata = giffrompgm( pgmdata )
-
-    #send image
-    return send_file( gifdata, mimetype='image/gif' )
-
-if __name__ == '__main__':
-    app.run(debug = True)
+    return subprocess.check_output( call_string )
