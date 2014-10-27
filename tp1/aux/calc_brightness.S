@@ -118,8 +118,8 @@ CB_FOR:
     add.s   $f0, $f2, $f0
     s.s     $f0, CB_ABSZ($fp)
 
-	l.s	    $f0, CB_FLOAT_FOUR        # si ( 4 < absz ) ir fin
-	l.s	    $f2, CB_ABSZ($fp)
+    l.s     $f0, CB_FLOAT_FOUR        # si ( 4 < absz ) ir fin
+    l.s	    $f2, CB_ABSZ($fp)
     c.lt.s  $f0, $f2
     bc1t    CB_RETURN
 
@@ -139,7 +139,7 @@ CB_FOR:
     l.s     $f0, CB_ZR($fp)           # accumulator = zk_square * zr
     mul.s   $f0, $f2, $f0             #
 
-	l.s	    $f2, CB_FLOAT_MINUS_THREE # accumulator = accumulator * (-3)
+    l.s	    $f2, CB_FLOAT_MINUS_THREE # accumulator = accumulator * (-3)
     mul.s   $f0, $f2, $f0             #
 
     l.s     $f2, CB_CR($fp)           # accumulator = accumulator + cr
@@ -166,7 +166,7 @@ CB_FOR:
     l.s     $f0, CB_ZI($fp)           # ACCUMULATOR = ZK_SQUARE * ZI
     mul.s   $f0, $f2, $f0             #
 
-	l.s	    $f2, CB_FLOAT_THREE       # ACCUMULATOR = ACCUMULATOR * 3
+    l.s     $f2, CB_FLOAT_THREE       # ACCUMULATOR = ACCUMULATOR * 3
     mul.s   $f0, $f2, $f0             #
 
     l.s     $f2, CB_ZK_CUBE($fp)      # ACCUMULATOR = ACCUMULATOR - ZK_CUBE
@@ -206,10 +206,10 @@ CB_RETURN:
 CB_FLOAT_FOUR:
     .word   1082130432
 
-	.align	2
+    .align  2
 CB_FLOAT_THREE:
-	.word	1077936128
+    .word   1077936128
 
-	.align	2
+    .align  2
 CB_FLOAT_MINUS_THREE:
-	.word	-1069547520
+     .word  -1069547520
