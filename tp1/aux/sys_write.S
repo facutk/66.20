@@ -69,7 +69,7 @@ SW_RETURN:
     addu    sp,  sp, SW_STACK_SIZE
 
     jr      ra
-    .end        sys_write                 # Retorno
+    .end    sys_write                 # Retorno
 
     .rdata
 ioerror:
