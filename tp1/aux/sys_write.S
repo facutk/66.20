@@ -48,13 +48,17 @@ sys_write:
     lw      a2,  SW_A2($fp)           # a2: data length.
     syscall
     
+    bne     a3,  zero, SW_ERROR       # Si a3 != 0 hay un error
+
     bgez    v0,  SW_RETURN            # Si vuelve del syscall sin errores
                                       # salgo normalmente
 
+SW_ERROR:
     li      v0,  SYS_write            # Si no salio normalmente
     li      a0,  2                    # Imprimo mensaje de error por stderr
     la      a1,  ioerror       
     li      a2,  11        
+    syscall
 
     li      v0,  SYS_exit             # exit(1)
     li      a0,  1
