@@ -1,0 +1,4 @@
+compilar el (en un entorno intel):
+
+$ make -f Makefile.init Makefiles CCARGS="-g -DUSE_SSE_ASSEMBLY"
+$ make
