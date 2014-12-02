@@ -1,6 +1,4 @@
-#include <debug.h>
 #include <stdio.h>
-#include <defs.h>
 #include <stdint.h>
 #include <param.h>
 
@@ -21,11 +19,15 @@ generic_plot(param_t *parms)
 	 * El parámetro de iteración es el punto (cr, ci).
 	 */
 	
-	ci = parms->UL_im - parms->y0 * parms->d_im;
+
+	//ci = parms->UL_im - parms->y0 * parms->d_im;
+	ci = parms->UL_im -(parms->y0 + 0.5f) * parms->d_im;
+
 	u8 = parms->bitmap + parms->y0 * parms->x_res;
 
 	for (y = parms->y0; y < parms->y1; ++y) {
-		cr = parms->UL_re; 
+		//cr = parms->UL_re; 
+                cr = parms->UL_re + 0.5f * parms->d_re;
 
 		for (x = 0; x < parms->x_res; ++x) {
 			zr = cr;
@@ -50,28 +52,31 @@ generic_plot(param_t *parms)
 			 * (cr, ci), usando la fórmula compleja recurrente 
 			 * f = f^3 + c.
 			 */
+                        printf("%f\t%f\n",cr,ci);
                         for (c = 0; c < parms->shades; ++c) {
                             if ((absz = zr*zr + zi*zi) >= 4.0f)
                                 break;
                             sr = 
                                  zr * zr * zr 
                                -
-                                 zi * zi * zr * 3
+                               zi * zi * zr * 3
                                + 
                                  cr
                                ;
-                            si = 
+                            si =
                                  zr * zr * zi * 3
-                               - 
-                                 zi * zi * zi
+                               -
+                               zi * zi * zi
                                + 
                                  ci
                                ;
 
                             zr = sr;
                             zi = si;
+                            //printf("ZR:%f\tZI:%f\n",zr,zi);
                         }
                                             
+
 
 			/* Escribimos la intensidad del px. */
 			*u8++ = (uint8_t)c;

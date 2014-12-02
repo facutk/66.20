@@ -34,10 +34,17 @@ extern void sse_plot(param_t *);
 
 int x_res = 640;		/* Ancho de imagen por defecto. */
 int y_res = 480;		/* Alto de imagen, por defecto. */
-float upper_left_re = +0.2795;	/* Extremo superior izquierzo (re). */
-float upper_left_im = -0.0075;	/* Extremo superior izquierzo (im). */
-float lower_right_re = +0.2845;	/* Extremo inferior derecho (re). */
-float lower_right_im = -0.0125;	/* Extremo inferior derecho (im). */
+
+//float upper_left_re = +0.2795;	/* Extremo superior izquierzo (re). */
+//float upper_left_im = -0.0075;	/* Extremo superior izquierzo (im). */
+//float lower_right_re = +0.2845;	/* Extremo inferior derecho (re). */
+//float lower_right_im = -0.0125;	/* Extremo inferior derecho (im). */
+
+float upper_left_re = -0.65;
+float lower_right_re = -0.55;
+float lower_right_im = +0.20;
+float upper_left_im = +0.30;
+
 size_t nthreads = 1;            /* Cantidad de threads de cómputo. */
 FILE *output;
 void (*plot)(param_t *);
@@ -461,11 +468,12 @@ pthreads_plot(void)
 		}
 	}
 
-	/* Header PGM. */
+	/* Header PGM.
 	fprintf(output, "P2\n");
 	fprintf(output, "%u\n", (unsigned)parms.x_res);
 	fprintf(output, "%u\n", (unsigned)parms.y_res);
 	fprintf(output, "%u\n", (unsigned)parms.shades);
+         */
 
 	for (y = 0; y < parms.y_res; ++y)
 	for (x = 0; x < parms.x_res; ++x) {

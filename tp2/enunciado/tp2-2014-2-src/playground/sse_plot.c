@@ -5,13 +5,12 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdint.h>
 
 /*
  * Application libraries.
  */
 
-#include <defs.h>
-#include <debug.h>
 #include <param.h>
 
 /* Useful constants. */
@@ -105,6 +104,11 @@ sse_plot(param_t *parms)
 		);
 
 		for (x = 0; x < parms->x_res; x += 4) {
+                        //printf("%f\t%f\n",*CR,*CI);
+                        printf("%f\t%f\n",CR0[0],*CI);
+                        printf("%f\t%f\n",CR0[1],*CI);
+                        printf("%f\t%f\n",CR0[2],*CI);
+                        printf("%f\t%f\n",CR0[3],*CI);
 			__asm__ volatile (
 			"initialize:             \n\t"
 			"xorps    %%xmm0, %%xmm0 \n\t" /* xmm0: ITER */
@@ -134,6 +138,21 @@ sse_plot(param_t *parms)
 
 			"increment:              \n\t"
 			"addps    %%xmm1, %%xmm0 \n\t" /* xmm0: ITER */
+			: "=r" (u8),      /* %0 */
+			  "=m" (ZR),      /* %1 */
+			  "=m" (ZI)       /* %2 */
+			: "m" (*CR),      /* %3 */
+			  "m" (*CI),      /* %4 */
+			  "m" (*ITER),    /* %5 */
+			  "m" (*FOUR),    /* %6 */
+			  "0" (u8),       /* %7 */
+			  "m" (*FFX4),    /* %8 */
+			  "m" (*UNIT)     /* %9 */
+			: "xmm0", "xmm1", "xmm2", "xmm3", 
+			  "xmm4", "xmm5", "xmm6", "xmm7",
+			  "mm0", "mm1", "eax", "ebx",
+			  "cc", "memory"
+			);
 
 			/* Calculate Z = Z^2 + C. */
 			//"Z_eq_Z2_plus_C:         \n\t"
@@ -150,6 +169,7 @@ sse_plot(param_t *parms)
 
 			//"jmp      loop           \n\t"
 
+			__asm__ volatile (
 			/* Calculate Z = Z^3 + C. */
 			"Z_eq_Z3_plus_C:         \n\t"
 
@@ -193,6 +213,31 @@ sse_plot(param_t *parms)
 
 			"movaps   %%xmm4, %%xmm2 \n\t" /* xmm2: new ZR */
 			"movaps   %%xmm6, %%xmm3 \n\t" /* xmm3: new ZI */
+
+			"movaps   %%xmm2, %1     \n\t" /* ZR: xmm2 */
+			"movaps   %%xmm3, %2     \n\t" /* ZI: xmm3 */
+
+			: "=r" (u8),      /* %0 */
+			  "=m" (ZR),      /* %1 */
+			  "=m" (ZI)       /* %2 */
+			: "m" (*CR),      /* %3 */
+			  "m" (*CI),      /* %4 */
+			  "m" (*ITER),    /* %5 */
+			  "m" (*FOUR),    /* %6 */
+			  "0" (u8),       /* %7 */
+			  "m" (*FFX4),    /* %8 */
+			  "m" (*UNIT)     /* %9 */
+			: "xmm0", "xmm1", "xmm2", "xmm3", 
+			  "xmm4", "xmm5", "xmm6", "xmm7",
+			  "mm0", "mm1", "eax", "ebx",
+			  "cc", "memory"
+			);
+                        //printf("ZR:%f\tZI:%f\n",ZR[0],ZI[0]);
+                        //printf("ZR:%f\tZI:%f\n",ZR[1],ZI[1]);
+                        //printf("ZR:%f\tZI:%f\n",ZR[2],ZI[2]);
+                        //printf("ZR:%f\tZI:%f\n",ZR[3],ZI[3]);
+
+			__asm__ volatile (
 			"jmp      loop           \n\t"
 
 			/*
