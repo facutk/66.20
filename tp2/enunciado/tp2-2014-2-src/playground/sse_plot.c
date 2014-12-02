@@ -117,14 +117,19 @@ sse_plot(param_t *parms)
 			"movaps   %4, %%xmm3     \n\t" /* xmm3: ZI = CI */
 
 			"loop:                   \n\t"
+
 			"movaps   %%xmm2, %%xmm4 \n\t" /* xmm4: ZR */
-			"movaps   %%xmm3, %%xmm5 \n\t" /* xmm5: ZI */
 			"mulps    %%xmm4, %%xmm4 \n\t" /* xmm4: ZR^2 */
+
+			"movaps   %%xmm3, %%xmm5 \n\t" /* xmm5: ZI */
 			"mulps    %%xmm5, %%xmm5 \n\t" /* xmm5: ZI^2 */
+
 			"movaps   %%xmm4, %%xmm6 \n\t" /* xmm6: ZR^2 */
 			"addps    %%xmm5, %%xmm6 \n\t" /* xmm6: ZR^2 + ZI^2 */
+
 			"cmpltps  %6, %%xmm6     \n\t" /* xmm6: abs(Z) <=> 2 */
 			"movmskps %%xmm6, %%eax  \n\t" /* eax : abs(Z) <=> 2 */
+
 			"andps    %%xmm6, %%xmm1 \n\t" /* xmm1: new INCR */
 			"testl    %%eax, %%eax   \n\t"
 			"jz       cast_output    \n\t"
@@ -211,6 +216,8 @@ sse_plot(param_t *parms)
 
 			"addps    %4, %%xmm6     \n\t" /* xmm6: += CI */
 
+
+
 			"movaps   %%xmm4, %%xmm2 \n\t" /* xmm2: new ZR */
 			"movaps   %%xmm6, %%xmm3 \n\t" /* xmm3: new ZI */
 
@@ -232,10 +239,14 @@ sse_plot(param_t *parms)
 			  "mm0", "mm1", "eax", "ebx",
 			  "cc", "memory"
 			);
-                        //printf("ZR:%f\tZI:%f\n",ZR[0],ZI[0]);
-                        //printf("ZR:%f\tZI:%f\n",ZR[1],ZI[1]);
-                        //printf("ZR:%f\tZI:%f\n",ZR[2],ZI[2]);
-                        //printf("ZR:%f\tZI:%f\n",ZR[3],ZI[3]);
+
+                        /* 
+                        printf("zr0:%f\tzi0:%f\tzr1:%f\tzi1:%f\tzr2:%f\tzi2:%f\tzr3:%f\tzi3:%f\n",
+                                ZR[0],ZI[0],
+                        ZR[1],ZI[1],
+                        ZR[2],ZI[2],
+                        ZR[3],ZI[3]);
+                         */
 
 			__asm__ volatile (
 			"jmp      loop           \n\t"

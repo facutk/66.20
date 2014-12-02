@@ -469,11 +469,11 @@ pthreads_plot(void)
 	}
 
 	/* Header PGM.
+         */
 	fprintf(output, "P2\n");
 	fprintf(output, "%u\n", (unsigned)parms.x_res);
 	fprintf(output, "%u\n", (unsigned)parms.y_res);
 	fprintf(output, "%u\n", (unsigned)parms.shades);
-         */
 
 	for (y = 0; y < parms.y_res; ++y)
 	for (x = 0; x < parms.x_res; ++x) {
