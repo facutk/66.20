@@ -17,8 +17,10 @@ AUXLIBS =
 
 $(PROG): $(SRCS) $(HDRS)
 	$(CC) $(CFLAGS) -ggdb -o $@ $(SRCS) $(SYSLIBS)
-	./$@ -o - -r 4x4 -m generic
-	./$@ -o - -r 4x4 -m sse
+	time ./$@ -o /dev/null -r 1024x768 -m generic -n 8
+	time ./$@ -o /dev/null -r 1024x768 -m generic -n 8 -p
+	#./$@ -o - -r 4x4 -m generic
+	#./$@ -o - -r 4x4 -m sse
 
 update: $(PROG)
 	:
@@ -32,10 +34,3 @@ makefiles Makefiles:
 	    mv makedefs.tmp makedefs.out;      \
 	fi >/dev/null 2>/dev/null
 	rm -f Makefile; (cat makedefs.out Makefile.in) >Makefile
-
-clean:
-	rm -f Makefile
-	cp Makefile.init Makefile
-	rm -f bin/[!CRS]* lib/[!CRS]* include/[!CRS]* libexec/[!CRS]*     \
-	      junk *core .nfs* .pure *.out *.out.* *.tmp *.a *~ *- *.orig \
-	      *.t *.o *.bak make.err *.gmon $(PROG)

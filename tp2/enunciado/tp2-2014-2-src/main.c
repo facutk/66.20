@@ -32,6 +32,8 @@ extern void sse_plot(param_t *);
  * Parámetros globales.
  */
 
+int optimization = 0;
+
 int x_res = 640;		/* Ancho de imagen por defecto. */
 int y_res = 480;		/* Alto de imagen, por defecto. */
 
@@ -65,6 +67,7 @@ static METHOD methods[] = {
 	{ NULL, NULL, }
 };
 
+
 static void parse_cmdline(int, char * const []);
 static void do_usage(const char *, int);
 static void do_version(const char *);
@@ -76,6 +79,7 @@ static void do_height(const char *, const char *);
 static void do_nthreads(const char *, const char *);
 static void do_method(const char *, const char *);
 static void do_output(const char *, const char *);
+static void do_optimization(const char *);
 
 int
 main(int argc, char * const argv[], char * const envp[])
@@ -103,10 +107,11 @@ parse_cmdline(int argc, char * const argv[])
 		{"method", required_argument, NULL, 'm'},
 		{"nthreads", required_argument, NULL, 'n'},
 		{"output", required_argument, NULL, 'o'},
+		{"optimization", no_argument, NULL, 'p'},
 	};
 
 	while ((ch = getopt_long(argc, argv, 
-	                         "hc:H:m:n:o:r:w:g:V", options, &index)) != -1) {
+	                         "hc:H:m:n:o:pr:w:g:V", options, &index)) != -1) {
 		switch (ch) {
 		case 'h':
 			do_usage(argv[0], 0);
@@ -137,6 +142,9 @@ parse_cmdline(int argc, char * const argv[])
 			break;
 		case 'o':
 			do_output(argv[0], optarg);
+			break;
+		case 'p':
+			do_optimization(argv[0]);
 			break;
 		default:
 			do_usage(argv[0], 1);
@@ -174,6 +182,12 @@ do_usage(const char *name, int status)
 	fprintf(stderr, "  %s -r 1600x1200 -o output.pgm\n", name);
 	fprintf(stderr, "  %s -c +0.282+0.01i -o output.pgm\n", name);
 	exit(status);
+}
+
+static void
+do_optimization(const char *name)
+{
+        optimization = 1;
 }
 
 static void
@@ -432,6 +446,7 @@ pthreads_plot(void)
 #define SZ(x) sizeof(x)
 #endif
 
+
 	if ((parms.bitmap = u8 = malloc(SZ(uint8_t) * x_res * y_res)) == 0) {
 		fprintf(stderr, "cannot allocate memory.\n");
 		exit(1);
@@ -442,31 +457,72 @@ pthreads_plot(void)
 		exit(1);
 	}
 
-	y0 = 0;
-	yd = y_res / nthreads;
+        if ( ! optimization ) {
+            y0 = 0;
+            yd = y_res / nthreads;
 
-	for (tn = 0; tn < nthreads; ++tn) {
-		memcpy(&tinfo[tn].parms, &parms, SZ(parms));
-		tinfo[tn].parms.y0 = y0;
-		tinfo[tn].parms.y1 = tn < nthreads - 1
-		                     ? (y0 += yd)
-		                     : (y_res);
+            for (tn = 0; tn < nthreads; ++tn) {
+                    memcpy(&tinfo[tn].parms, &parms, SZ(parms));
+                    tinfo[tn].parms.y0 = y0;
+                    tinfo[tn].parms.y1 = tn < nthreads - 1
+                                         ? (y0 += yd)
+                                         : (y_res);
 
-		if (pthread_create(&tinfo[tn].tid, 
-		                   NULL, 
-		                   (void *)plot,
-		                   &tinfo[tn].parms) != 0) {
-			fprintf(stderr, "cannot create thread.\n");
-			exit(1);
-		}
-	}
+                    if (pthread_create(&tinfo[tn].tid, 
+                                       NULL, 
+                                       (void *)plot,
+                                       &tinfo[tn].parms) != 0) {
+                            fprintf(stderr, "cannot create thread.\n");
+                            exit(1);
+                    }
+            }
 
-	for (tn = 0; tn < nthreads; ++tn) {
-		if (pthread_join(tinfo[tn].tid, NULL) != 0) {
-			fprintf(stderr, "cannot join thread.\n");
-			exit(1);
-		}
-	}
+            for (tn = 0; tn < nthreads; ++tn) {
+                    if (pthread_join(tinfo[tn].tid, NULL) != 0) {
+                            fprintf(stderr, "cannot join thread.\n");
+                            exit(1);
+                    }
+            }
+        }
+        else
+        {
+            //printf("OPTIMIZED\n");
+            //int y_res = 67;
+
+            int batch;
+            for (batch = 0; batch < y_res; batch+=nthreads) {
+                //printf("<%d>\n", batch);
+                int threads_max = batch+nthreads < y_res ? nthreads: y_res - batch;
+
+                int tn;
+                for (tn = 0; tn < threads_max; tn++) {
+                    int y_line = batch + tn;
+                    //printf("%d\t", y_line);
+
+                    memcpy(&tinfo[tn].parms, &parms, SZ(parms));
+                    tinfo[tn].parms.y0 = y_line;
+                    tinfo[tn].parms.y1 = y_line + 1;
+
+                    if (pthread_create(&tinfo[tn].tid, 
+                                       NULL, 
+                                       (void *)plot,
+                                       &tinfo[tn].parms) != 0) {
+                            fprintf(stderr, "cannot create thread.\n");
+                            exit(1);
+                    }
+                }
+
+                for (tn = 0; tn < threads_max; ++tn) {
+                        if (pthread_join(tinfo[tn].tid, NULL) != 0) {
+                                fprintf(stderr, "cannot join thread.\n");
+                                exit(1);
+                        }
+                }
+
+                //printf("\n");
+            }
+
+        }
 
 	/* Header PGM.
          */

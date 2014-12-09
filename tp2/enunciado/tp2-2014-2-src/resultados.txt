@@ -1,0 +1,20 @@
+time -f "%E" ./tp2-2014-2-bin -o /dev/null -r 1024x768 -m generic --center -0.6+0.6i --width 0.05 --height 0.05
+nthreads    normal      optimization
+1           0:03.05     0:03.15
+2           0:02.84     0:02.66
+3           0:02.62     0:02.66
+4           0:02.59     0:02.64
+
+time -f "%E" ./tp2-2014-2-bin -o /dev/null -r 1024x768 -m generic --center -0.25+1.15i --width 0.1 --height 0.1
+nthreads    normal      optimization
+1           0:02.07     0:02.28
+2           0:02.01     0:01.98
+3           0:01.88     0:01.99
+4           0:01.92     0:01.95
+
+time -f "%E" ./tp2-2014-2-bin -o /dev/null -r 1024x768 -m generic --center 0.59-0.23i --width 0.015 --height 0.015
+nthreads    normal      optimization
+1           0:04.19     0:04.46
+2           0:04.06     0:03.66
+3           0:03.70     0:03.68
+4           0:03.42     0:03.55
